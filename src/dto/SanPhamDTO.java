@@ -4,6 +4,7 @@ public class SanPhamDTO {
     private String idSanPham;
     private String tenSanPham;
     private int soLuong;
+    private int giaNhap;
     private int giaBan;
     private String hang;
     private String imgSanPham;
@@ -13,10 +14,11 @@ public class SanPhamDTO {
         
     }
 
-    public SanPhamDTO(String idSanPham, String tenSanPham, int soLuong, int giaBan, String hang, String imgSanPham, boolean enable) {
+    public SanPhamDTO(String idSanPham, String tenSanPham, int soLuong, int giaNhap, int giaBan, String hang, String imgSanPham, boolean enable) {
         this.idSanPham = idSanPham;
         this.tenSanPham = tenSanPham;
         this.soLuong = soLuong;
+        this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.hang = hang;
         this.imgSanPham = imgSanPham;
@@ -45,6 +47,14 @@ public class SanPhamDTO {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public int getGiaNhap() {
+        return giaNhap;
+    }
+
+    public void setGiaNhap(int giaNhap) {
+        this.giaNhap = giaNhap;
     }
 
     public int getGiaBan() {

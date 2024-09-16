@@ -20,12 +20,13 @@ public class SanPhamDAO {
                 String id = rs.getString("id");
                 String ten = rs.getString("ten");
                 int so_luong = rs.getInt("so_luong");
+                int gia_nhap = rs.getInt("gia_nhap");
                 int gia_ban = rs.getInt("gia_ban");
                 String hang = rs.getString("hang");
                 String img = rs.getString("img");
                 boolean enable = rs.getBoolean("enable");
                 
-                SanPhamDTO sanPham = new SanPhamDTO(id, ten, so_luong, gia_ban, hang, img, enable);
+                SanPhamDTO sanPham = new SanPhamDTO(id, ten, so_luong, gia_nhap, gia_ban, hang, img, enable);
                 spList.add(sanPham);
             }
             rs.close();
@@ -41,6 +42,7 @@ public class SanPhamDAO {
         String sql = "UPDATE sanpham SET ";
         sql += "ten='" + sp.getTenSanPham() + "', ";
         sql += "so_luong='" + sp.getSoLuong() + "', ";
+        sql += "gia_nhap='" + sp.getGiaNhap() + "', ";
         sql += "gia_ban='" + sp.getGiaBan() + "', ";
         sql += "hang='" + sp.getHang() + "', ";
         sql += "img='" + sp.getImgSanPham() + "' ";
@@ -53,6 +55,7 @@ public class SanPhamDAO {
         sql += "'" + sp.getIdSanPham() + "', ";
         sql += "N'" + sp.getTenSanPham() + "', ";
         sql += "'" + sp.getSoLuong() + "', ";
+        sql += "'" + sp.getGiaNhap() + "', ";
         sql += "'" + sp.getGiaBan() + "', ";
         sql += "'" + sp.getHang() + "', ";
         sql += "'" + sp.getImgSanPham() + "', ";
