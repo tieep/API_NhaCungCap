@@ -195,7 +195,7 @@ public class NhanVienGUI extends JPanel {
         
         Vector<QuyenDTO> quyen = new Vector<>();
         for (QuyenDTO q : quyenBUS.getQuyenList()) {
-            if (q.isEnable() && !q.getIdQuyen().equals("QU001")) {
+            if (q.isEnable()) {
                 quyen.add(q);
             }
         }
@@ -319,10 +319,10 @@ public class NhanVienGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần sửa!");
                     return;
                 }
-                else if (arrTfInfor.get(0).getText().equals("US001")) {
-                    JOptionPane.showMessageDialog(null, "Không được phép sửa tài khoản admin!");
-                    return;
-                }
+//                else if (arrTfInfor.get(0).getText().equals("US001")) {
+//                    JOptionPane.showMessageDialog(null, "Không được phép sửa tài khoản admin!");
+//                    return;
+//                }
                 isEditing = true;
                 
                 lockInfor(false);

@@ -122,9 +122,9 @@ public class SanPhamGUI extends JPanel {
         pn_avatar.add(this.lbImgSanPham);
         
         // create panel description
-        JPanel pn_desc = new JPanel(new FlowLayout(1, 15, 15));
+        JPanel pn_desc = new JPanel(new FlowLayout(1, 15, 10));
 
-        String[] thuoc_tinh = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"};
+        String[] thuoc_tinh = {"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập", "Giá bán"};
         int len = thuoc_tinh.length;
         this.arrPnInfor = new ArrayList<JPanel>();
         this.arrLbInfor = new ArrayList<JLabel>();
@@ -153,8 +153,12 @@ public class SanPhamGUI extends JPanel {
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_desc.add(this.arrPnInfor.get(i));
         }
-        this.arrTfInfor.get(0).setEditable(false); // khóa luôn khả năng chỉnh sửa mã sản phẩm
+        // khóa hết thông tin sản phẩm, không được tương tác
+        this.arrTfInfor.get(0).setEditable(false);
+        this.arrTfInfor.get(1).setEditable(false);
         this.arrTfInfor.get(2).setEditable(false);
+        this.arrTfInfor.get(3).setEditable(false);
+        this.arrTfInfor.get(4).setEditable(false);
 
         JPanel pn_brand = new JPanel(new FlowLayout(0, 0, 0));
         pn_brand.setPreferredSize(d_pn);
@@ -348,10 +352,11 @@ public class SanPhamGUI extends JPanel {
                             String maMay = excelRow.getCell(0).getStringCellValue();
                             String tenMay = excelRow.getCell(1).getStringCellValue();
                             int soLuong = Integer.valueOf(excelRow.getCell(2).getStringCellValue()) ;
-                            int donGia = Integer.valueOf(excelRow.getCell(3).getStringCellValue()) ;
-                            String hang = excelRow.getCell(4).getStringCellValue();
-                            String img = excelRow.getCell(5).getStringCellValue();
-                            SanPhamDTO mt = new SanPhamDTO(maMay, tenMay, soLuong, donGia, hang, img, true);
+                            int giaNhap = Integer.valueOf(excelRow.getCell(3).getStringCellValue()) ;
+                            int giaBan = Integer.valueOf(excelRow.getCell(4).getStringCellValue()) ;
+                            String hang = excelRow.getCell(5).getStringCellValue();
+                            String img = excelRow.getCell(6).getStringCellValue();
+                            SanPhamDTO mt = new SanPhamDTO(maMay, tenMay, soLuong, giaNhap, giaBan, hang, img, true);
                             listAccExcel.add(mt);
                             DefaultTableModel table_acc = (DefaultTableModel) table.getModel();
                             table_acc.setRowCount(0);
@@ -367,7 +372,7 @@ public class SanPhamGUI extends JPanel {
                     SanPhamDTO sp = listAccExcel.get(i);
                     if (sp.getIdSanPham().contains("SP")) {
                         SanPhamDTO sanPham = new SanPhamDTO(
-                                sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham(), true
+                                sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaNhap(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham(), true
                         );
                         sanPhamBUS.updateSanPham(sp);
                     } else {
@@ -429,11 +434,12 @@ public class SanPhamGUI extends JPanel {
                         String idSP = arrTfInfor.get(0).getText();
                         String tenSP = arrTfInfor.get(1).getText();
                         int soLuong = Integer.parseInt(arrTfInfor.get(2).getText());
-                        int gia = Integer.parseInt(arrTfInfor.get(3).getText());
+                        int giaNhap = Integer.parseInt(arrTfInfor.get(3).getText());
+                        int giaBan = Integer.parseInt(arrTfInfor.get(4).getText());
                         String hang = (String) cbBrand.getItemAt(cbBrand.getSelectedIndex());
                         String newImg = imgSanPham;
                         
-                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg, true);
+                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, giaNhap, giaBan, hang, newImg, true);
                         sanPhamBUS.updateSanPham(sp);
                         
                         
@@ -449,7 +455,8 @@ public class SanPhamGUI extends JPanel {
                         String idSP = arrTfInfor.get(0).getText();
                         String tenSP = arrTfInfor.get(1).getText();
                         int soLuong = Integer.parseInt(arrTfInfor.get(2).getText());
-                        int gia = Integer.parseInt(arrTfInfor.get(3).getText());
+                        int giaNhap = Integer.parseInt(arrTfInfor.get(3).getText());
+                        int giaBan = Integer.parseInt(arrTfInfor.get(4).getText());
                         String hang = (String) cbBrand.getItemAt(cbBrand.getSelectedIndex());
                         String newImg = imgSanPham;
                         
@@ -458,7 +465,7 @@ public class SanPhamGUI extends JPanel {
                             return;
                         }
                         
-                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, gia, hang, newImg, true);
+                        SanPhamDTO sp = new SanPhamDTO(idSP, tenSP, soLuong, giaNhap, giaBan, hang, newImg, true);
                         sanPhamBUS.addSanPham(sp);
                         
                         saveImg();
@@ -656,7 +663,7 @@ public class SanPhamGUI extends JPanel {
         pn_table.setPreferredSize(new Dimension(this.width, 300));
         
         String[] col = {
-            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Hãng", "IMG"
+            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập", "Giá bán", "Hãng", "IMG"
         };
         this.model = new DefaultTableModel(col, 0);
         this.table = new JTable();
@@ -668,11 +675,12 @@ public class SanPhamGUI extends JPanel {
         
         
         table.getColumnModel().getColumn(0).setPreferredWidth(30);
-        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(90);
         table.getColumnModel().getColumn(2).setPreferredWidth(10);
-        table.getColumnModel().getColumn(3).setPreferredWidth(50);
+        table.getColumnModel().getColumn(3).setPreferredWidth(40);
         table.getColumnModel().getColumn(4).setPreferredWidth(40);
         table.getColumnModel().getColumn(5).setPreferredWidth(20);
+        table.getColumnModel().getColumn(6).setPreferredWidth(20);
         
         this.loadSP();
         
@@ -684,7 +692,7 @@ public class SanPhamGUI extends JPanel {
                 if (table.getRowSorter() != null) {
                     row = table.getRowSorter().convertRowIndexToModel(row);
                 }
-                imgSanPham = table.getModel().getValueAt(row, 5).toString();
+                imgSanPham = table.getModel().getValueAt(row, 6).toString();
                 IconModel icon_sp = new IconModel(175, 200, "SanPham/" + imgSanPham);
                 
                 // set thông tin cho sản phẩm
@@ -692,7 +700,8 @@ public class SanPhamGUI extends JPanel {
                 arrTfInfor.get(1).setText(table.getModel().getValueAt(row, 1).toString());
                 arrTfInfor.get(2).setText(table.getModel().getValueAt(row, 2).toString());
                 arrTfInfor.get(3).setText(table.getModel().getValueAt(row, 3).toString());
-                cbBrand.setSelectedItem(table.getModel().getValueAt(row, 4).toString());
+                arrTfInfor.get(4).setText(table.getModel().getValueAt(row, 4).toString());
+                cbBrand.setSelectedItem(table.getModel().getValueAt(row, 5).toString());
                 lbImgSanPham.setText("");
                 lbImgSanPham.setIcon(icon_sp.createIcon());
                 
@@ -743,7 +752,7 @@ public class SanPhamGUI extends JPanel {
         for (SanPhamDTO sp : spList) {
             if (sp.isEnable()) {
                 model.addRow(new Object[]{
-                    sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham()
+                    sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaNhap(), sp.getGiaBan(), sp.getHang(), sp.getImgSanPham()
                 });
             }
         }
@@ -774,6 +783,7 @@ public class SanPhamGUI extends JPanel {
         arrTfInfor.get(1).setText("");
         arrTfInfor.get(2).setText("");
         arrTfInfor.get(3).setText("");
+        arrTfInfor.get(4).setText("");
         lbImgSanPham.setIcon(null);
         lbImgSanPham.setText("Image");
         imgSanPham = "null";
