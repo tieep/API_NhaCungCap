@@ -332,7 +332,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
         pn_table.setPreferredSize(new Dimension(this.width, 320));
         
         String[] col = {
-            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Hãng"
+            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán", "Hãng"
         };
         this.model = new DefaultTableModel(col, 0);
         this.table = new JTable();

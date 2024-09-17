@@ -65,7 +65,7 @@ public class ChonNhaCungCapGUI extends JDialog implements ActionListener {
                 if (txt.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
                 }
-                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("KH")) {
+                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("CC")) {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
                 } 
                 else {
@@ -79,7 +79,7 @@ public class ChonNhaCungCapGUI extends JDialog implements ActionListener {
                 if (txt.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
                 }
-                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("KH")) {
+                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("CC")) {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
                 } 
                 else {

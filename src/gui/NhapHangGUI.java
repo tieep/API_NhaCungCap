@@ -64,7 +64,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
     private CTPhieuNhapBUS ctPhieuNhapBUS = new CTPhieuNhapBUS();
 
     private JPanel pnInfor, pnFilter, pnTable;
-    private JSlider slider;
+//    private JSlider slider;
     private ArrayList<JPanel> arrPnInfor;
     private ArrayList<JLabel> arrLbInfor;
     private ArrayList<JTextField> arrTfInfor;
@@ -108,21 +108,21 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         result.setPreferredSize(new Dimension(this.width, 300));
         
         // phần thông tin phiếu nhập
-        JPanel pn_infor = new JPanel(new FlowLayout(1, 5, 10));
+        JPanel pn_infor = new JPanel(new FlowLayout(1, 5, 15));
         pn_infor.setPreferredSize(new Dimension(250, 250));
         pn_infor.setBorder(BorderFactory.createLineBorder(color1, 2));
         
         loadPN();
         
-        String[] thuoc_tinh = {"Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên", "Ngày", "Giá lời"};
+        String[] thuoc_tinh = {"Mã phiếu nhập", "Nhà cung cấp", "Mã nhân viên", "Ngày"};
         int len = thuoc_tinh.length;
         this.arrPnInfor = new ArrayList<>();
         this.arrLbInfor = new ArrayList<>();
         this.arrTfInfor = new ArrayList<>();
         
-        Dimension d_pn = new Dimension(240, 25);
-        Dimension d_lb = new Dimension(100, 25);
-        Dimension d_tf = new Dimension(130, 25);
+        Dimension d_pn = new Dimension(240, 30);
+        Dimension d_lb = new Dimension(100, 30);
+        Dimension d_tf = new Dimension(130, 30);
         Color color_font = this.color1;
         Font font_infor = new Font("Segoe UI", Font.PLAIN, 13);
         for (int i = 0; i < len; i++) {
@@ -148,7 +148,6 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         this.arrTfInfor.get(0).setText(phieuNhapBUS.createNewId());
         this.arrTfInfor.get(2).setText(this.user.getIdUser());
         this.arrTfInfor.get(3).setText(LocalDate.now()+"");
-        this.arrTfInfor.get(4).setText("0%");
         
         this.arrTfInfor.get(1).setPreferredSize(new Dimension(100, 25));
         this.btnChonNhaCungCap = new JButton("...");
@@ -159,32 +158,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         this.btnChonNhaCungCap.addActionListener(this);
         this.arrPnInfor.get(1).add(this.btnChonNhaCungCap);
         
-        // Thanh chọn giá lời
-        JPanel pn_slider = new JPanel(new BorderLayout());
-        pn_slider.setPreferredSize(new Dimension(240, 50));
-        this.slider = new JSlider(SwingConstants.HORIZONTAL, 0, 100, 0);
-        this.slider.setPreferredSize(new Dimension(200, 15));
-        this.slider.setMajorTickSpacing(20);
-        this.slider.setMinorTickSpacing(10);
-        this.slider.setPaintTicks(true);
-        this.slider.setPaintLabels(true);
-        this.slider.setLabelTable(slider.createStandardLabels(20));
-        this.slider.setFont(font_infor);
-        this.slider.setForeground(color_font);
-        
-        this.slider.addChangeListener(new ChangeListener() { 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                arrTfInfor.get(4).setText(slider.getValue() + "%");
-                tinhGiaNhap(slider.getValue());
-                reloadCTPN();
-                lbTongTien.setText(String.valueOf(tinhTongTien()));
-            }        
-        });
-        
-        pn_slider.add(slider, BorderLayout.CENTER);
-        pn_infor.add(pn_slider);
-        
+
         // phần bảng thông tin chi tiết hóa đơn
         JPanel pn_table = new JPanel(new FlowLayout(1));
         
@@ -361,7 +335,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         pn_table.setPreferredSize(new Dimension(this.width, 320));
         
         String[] col = {
-            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá", "Hãng"
+            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá nhập", "Hãng"
         };
         this.model = new DefaultTableModel(col, 0);
         this.table = new JTable();
@@ -428,7 +402,7 @@ public class NhapHangGUI extends JPanel implements ActionListener {
         for (SanPhamDTO sp : spList) {
             if (sp.isEnable()) {
                 model.addRow(new Object[]{
-                    sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaBan(), sp.getHang()
+                    sp.getIdSanPham(), sp.getTenSanPham(), sp.getSoLuong(), sp.getGiaNhap(), sp.getHang()
                 });
             }
         }
@@ -486,10 +460,28 @@ public class NhapHangGUI extends JPanel implements ActionListener {
                 return;
             }
             
-            // kiểm tra sản phẩm có trong giỏ chưa
             String id_pn = this.arrTfInfor.get(0).getText();
             String id_sp = table.getModel().getValueAt(row, 0).toString();
             String ten_sp = table.getModel().getValueAt(row, 1).toString();
+            int so_luong = Integer.parseInt(table.getModel().getValueAt(row, 2).toString());
+            String hang = table.getModel().getValueAt(row, 4).toString();
+
+            // kiểm tra sản phẩm có giá nhập chưa
+            int gia_nhap = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
+            int gia_ban;
+            if (gia_nhap == 0) {
+                TaoGiaNhapGUI result = new TaoGiaNhapGUI();
+                gia_nhap = result.getGiaNhap();
+                gia_ban = result.getGiaBan();
+                if (gia_nhap == 0) return;
+                else {
+                    SanPhamDTO sp = new SanPhamDTO(id_sp, ten_sp, so_luong, gia_nhap, gia_ban, hang, id_sp+".png", true);
+                    sanPhamBUS.updateSanPham(sp);
+                    loadSP();
+                }
+            }
+            
+            // kiểm tra sản phẩm có trong giỏ chưa
             boolean sp_moi = true;
             for (CTPhieuNhapDTO ctpn : arrCTPN) {
                 if (ctpn.getIdSanPham().equals(id_sp)) {
@@ -501,9 +493,8 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             }
 
             if (sp_moi) {
-                
-                int gia = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
-                arrCTPN.add(new CTPhieuNhapDTO(id_pn, id_sp, ten_sp, sl_them, gia));
+//                int gia = Integer.parseInt(table.getModel().getValueAt(row, 3).toString());
+                arrCTPN.add(new CTPhieuNhapDTO(id_pn, id_sp, ten_sp, sl_them, gia_nhap));
             }
             reloadCTPN();
             this.lbTongTien.setText(String.valueOf(tinhTongTien()));
