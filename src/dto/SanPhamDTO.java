@@ -13,6 +13,14 @@ public class SanPhamDTO {
     public SanPhamDTO() {
         
     }
+    
+    public SanPhamDTO(String idSanPham, String tenSanPham, int giaNhap, int giaBan, boolean enable) {
+        this.idSanPham = idSanPham;
+        this.tenSanPham = tenSanPham;
+        this.giaNhap = giaNhap;
+        this.giaBan = giaBan;
+        this.enable = enable;
+    }
 
     public SanPhamDTO(String idSanPham, String tenSanPham, int soLuong, int giaNhap, int giaBan, String hang, String imgSanPham, boolean enable) {
         this.idSanPham = idSanPham;
