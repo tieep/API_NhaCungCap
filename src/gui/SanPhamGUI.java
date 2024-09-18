@@ -266,6 +266,8 @@ public class SanPhamGUI extends JPanel {
                 
                 arrTfInfor.get(0).setText(sanPhamBUS.createNewId());
                 arrTfInfor.get(2).setText("0");
+                arrTfInfor.get(3).setText("0");
+                arrTfInfor.get(4).setText("0");
                 
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
@@ -774,7 +776,6 @@ public class SanPhamGUI extends JPanel {
     // khóa khả năng thao tác với thông tin
     public void lockInfor(boolean lock) {
         arrTfInfor.get(1).setEditable(!lock);
-        arrTfInfor.get(3).setEditable(!lock);    
         cbBrand.setEnabled(!lock);
     }
     

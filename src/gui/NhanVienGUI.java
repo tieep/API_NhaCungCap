@@ -292,8 +292,12 @@ public class NhanVienGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
                 isEditing = false;
-                lockInfor(false);
                 
+                arrTfInfor.get(1).setEditable(true);
+                arrTfInfor.get(2).setEditable(true);
+                arrTfInfor.get(3).setEditable(true);
+                cbGioiTinh.setEnabled(true);
+
                 arrTfInfor.get(0).setText(userBUS.createNewId());
                 
                 btnThem.setVisible(false);
@@ -347,6 +351,19 @@ public class NhanVienGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (arrTfInfor.get(0).getText().equals("")) {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xóa!");
+                    return;
+                }
+                
+                int cnt = 0;
+                for (UserDTO user : userBUS.getUserList()) {
+                    if (user.getQuyen().equals("QU001") && user.isEnable()) {
+                        cnt++;
+                    }
+                }
+                System.out.println(cnt);
+                
+                if (cnt < 2) {
+                    JOptionPane.showMessageDialog(null, "Không thể xóa admin duy nhất!");
                     return;
                 }
                 
