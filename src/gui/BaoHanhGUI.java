@@ -68,7 +68,7 @@ public class BaoHanhGUI  extends JPanel {
         JPanel pn_filter = new JPanel(new FlowLayout(1, 10, 20));
         
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
-        JLabel lb_tim_kiem = new JLabel("Tìm kiếm");
+        JLabel lb_tim_kiem = new JLabel("Tìm kiếmmmmmmmmmmmmmmmmmm");
         lb_tim_kiem.setFont(font_filter);
         lb_tim_kiem.setForeground(color1);
         
