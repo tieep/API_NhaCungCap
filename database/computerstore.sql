@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2024 at 10:18 AM
+-- Generation Time: Sep 18, 2024 at 10:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,6 +73,83 @@ CREATE TABLE `ctquyenchucnang` (
   `id_quyen` varchar(10) NOT NULL,
   `id_chuc_nang` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ctquyenchucnang`
+--
+
+INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
+('QU001', '00'),
+('QU001', '01'),
+('QU001', '02'),
+('QU001', '03'),
+('QU001', '04'),
+('QU001', '05'),
+('QU001', '06'),
+('QU001', '07'),
+('QU001', '08'),
+('QU001', '09'),
+('QU001', '10'),
+('QU001', '11'),
+('QU001', '12'),
+('QU001', '13'),
+('QU001', '14'),
+('QU001', '15'),
+('QU001', '16'),
+('QU001', '20'),
+('QU001', '21'),
+('QU001', '22'),
+('QU001', '23'),
+('QU001', '24'),
+('QU001', '30'),
+('QU001', '31'),
+('QU001', '32'),
+('QU001', '33'),
+('QU001', '34'),
+('QU002', '01'),
+('QU002', '03'),
+('QU002', '05'),
+('QU002', '07'),
+('QU002', '09'),
+('QU002', '11'),
+('QU002', '21'),
+('QU002', '33'),
+('QU003', '02'),
+('QU003', '03'),
+('QU003', '06'),
+('QU003', '08'),
+('QU003', '12'),
+('QU003', '13'),
+('QU003', '16'),
+('QU003', '22'),
+('QU003', '23'),
+('QU003', '32'),
+('QU003', '33'),
+('QU004', '00'),
+('QU004', '01'),
+('QU004', '02'),
+('QU004', '03'),
+('QU004', '04'),
+('QU004', '05'),
+('QU004', '06'),
+('QU004', '07'),
+('QU004', '08'),
+('QU004', '09'),
+('QU004', '10'),
+('QU004', '20'),
+('QU004', '30'),
+('QU005', '00'),
+('QU005', '04'),
+('QU005', '10'),
+('QU005', '14'),
+('QU005', '20'),
+('QU005', '24'),
+('QU005', '34'),
+('QU006', '00'),
+('QU006', '01'),
+('QU006', '02'),
+('QU006', '03'),
+('QU006', '13');
 
 -- --------------------------------------------------------
 
@@ -167,6 +244,13 @@ CREATE TABLE `quyen` (
   `ten` varchar(50) DEFAULT NULL,
   `enable` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `quyen`
+--
+
+INSERT INTO `quyen` (`id`, `ten`, `enable`) VALUES
+('QU001', 'Admin', 1);
 
 -- --------------------------------------------------------
 

@@ -203,6 +203,7 @@ public class NhanVienGUI extends JPanel {
         this.cbQuyen.setPreferredSize(d_tf);
         this.cbQuyen.setForeground(color_font);
         this.cbQuyen.setFont(font_infor);
+        this.cbQuyen.setEnabled(false);
         
         pn_quyen.add(lb_quyen);
         pn_quyen.add(this.cbQuyen);
@@ -329,7 +330,9 @@ public class NhanVienGUI extends JPanel {
 //                }
                 isEditing = true;
                 
-                lockInfor(false);
+                arrTfInfor.get(1).setEditable(true);
+                
+//                lockInfor(false);
                 
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
@@ -717,6 +720,9 @@ public class NhanVienGUI extends JPanel {
                 imgNhanVien = table.getModel().getValueAt(row, 6).toString();
                 IconModel icon_nv = new IconModel(175, 200, "NhanVien/" + imgNhanVien);
                 
+                arrTfInfor.get(1).setEditable(false);
+                cbGioiTinh.setEnabled(false);
+                
                 // set thông tin cho sản phẩm
                 arrTfInfor.get(0).setText(table.getModel().getValueAt(row, 0).toString());
                 arrTfInfor.get(1).setText(table.getModel().getValueAt(row, 1).toString());
@@ -733,10 +739,10 @@ public class NhanVienGUI extends JPanel {
                 lbImgNhanVien.setText("");
                 lbImgNhanVien.setIcon(icon_nv.createIcon());
                 
-                if (isEditing) {
-                    lockInfor(false);
-                }
-                else lockInfor(true);
+//                if (isEditing) {
+//                    lockInfor(false);
+//                }
+//                else lockInfor(true);
             }
         });
         
@@ -806,10 +812,10 @@ public class NhanVienGUI extends JPanel {
     }
     
     // khóa khả năng thao tác với thông tin
-    public void lockInfor(boolean lock) {
-        arrTfInfor.get(1).setEditable(!lock);
-        cbQuyen.setEnabled(!lock);
-    }
+//    public void lockInfor(boolean lock) {
+//        arrTfInfor.get(1).setEditable(!lock);
+//        cbQuyen.setEnabled(!lock);
+//    }
     
     public void blankInfor() {
         arrTfInfor.get(0).setText("");
