@@ -155,11 +155,10 @@ public class NhanVienGUI extends JPanel {
             this.arrPnInfor.get(i).add(this.arrLbInfor.get(i));
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_desc.add(this.arrPnInfor.get(i));
+            this.arrTfInfor.get(i).setEditable(false);
         }
         // Mặc định khóa các thuộc tính id, tên, giới tính, sđt
-        this.arrTfInfor.get(0).setEditable(false);
-        this.arrTfInfor.get(2).setEditable(false); 
-        this.arrTfInfor.get(3).setEditable(false); 
+        
         
         JPanel pn_gioi_tinh = new JPanel(new FlowLayout(0, 0, 0));
         pn_gioi_tinh.setPreferredSize(d_pn);
@@ -292,13 +291,8 @@ public class NhanVienGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
+                lockInforAdd();
                 isEditing = false;
-                
-                arrTfInfor.get(1).setEditable(true);
-                arrTfInfor.get(2).setEditable(true);
-                arrTfInfor.get(3).setEditable(true);
-                cbGioiTinh.setEnabled(true);
-
                 arrTfInfor.get(0).setText(userBUS.createNewId());
                 
                 btnThem.setVisible(false);
@@ -330,9 +324,9 @@ public class NhanVienGUI extends JPanel {
 //                }
                 isEditing = true;
                 
-                arrTfInfor.get(1).setEditable(true);
+//                arrTfInfor.get(1).setEditable(true);
                 
-//                lockInfor(false);
+                lockInforEdit();
                 
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
@@ -527,6 +521,7 @@ public class NhanVienGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
+                lockInforAll();
                 
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
                 if (isEditing) isEditing = false;
@@ -816,6 +811,26 @@ public class NhanVienGUI extends JPanel {
 //        arrTfInfor.get(1).setEditable(!lock);
 //        cbQuyen.setEnabled(!lock);
 //    }
+    
+    public void lockInforAll(){
+        for(int i=0; i<= 3; i++){
+            arrTfInfor.get(i).setEditable(false);
+            cbQuyen.setEnabled(false);
+            cbGioiTinh.setEnabled(false);
+        }
+    }
+    
+    public void lockInforAdd(){
+        for(int i=1; i<=3; i++){
+            arrTfInfor.get(i).setEditable(true);
+            cbQuyen.setEnabled(true);
+            cbGioiTinh.setEnabled(true);
+        }
+    }
+    
+    public void lockInforEdit(){
+        arrTfInfor.get(1).setEditable(true);
+    }
     
     public void blankInfor() {
         arrTfInfor.get(0).setText("");

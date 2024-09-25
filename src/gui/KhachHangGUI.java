@@ -132,8 +132,9 @@ public class KhachHangGUI extends JPanel {
             this.arrPnInfor.get(i).add(this.arrLbInfor.get(i));
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_desc.add(this.arrPnInfor.get(i));
+            this.arrTfInfor.get(i).setEditable(false);
         }
-        this.arrTfInfor.get(0).setEditable(false); // khóa luôn khả năng chỉnh sửa mã sản phẩm
+//        this.arrTfInfor.get(0).setEditable(false); // khóa luôn khả năng chỉnh sửa mã sản phẩm
         
         // create panel button
         JPanel pn_btn = new JPanel(new FlowLayout(1, 70, 10));
@@ -196,37 +197,37 @@ public class KhachHangGUI extends JPanel {
         btn_tro_ve.setFont(font_btn);
         
         // thêm các nút
-        pn_btn.add(btnThem);
+//        pn_btn.add(btnThem);
         pn_btn.add(btnSua);
-        pn_btn.add(btnXoa);
+//        pn_btn.add(btnXoa);
         pn_btn.add(btnNhapExcel);
         pn_btn.add(btnXuatExcel);
         pn_btn.add(btn_hoan_thanh);
         pn_btn.add(btn_tro_ve);
         
         // khi ấn nút thêm
-       btnThem.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                blankInfor();
-                isEditing = false;
-                lockInfor(false);
-                
-                arrTfInfor.get(0).setText(khachHangBUS.createNewId());
-                
-                btnThem.setVisible(false);
-                btnSua.setVisible(false);
-                btnXoa.setVisible(false);
-                btnNhapExcel.setVisible(false);
-                btnXuatExcel.setVisible(false);
-                
-                btn_hoan_thanh.setVisible(true);
-                btn_tro_ve.setVisible(true);
-                
-                table.clearSelection();
-                table.setEnabled(false);
-            }
-        });
+//       btnThem.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                blankInfor();
+//                isEditing = false;
+//                lockInforAdd();
+//                
+//                arrTfInfor.get(0).setText(khachHangBUS.createNewId());
+//                
+//                btnThem.setVisible(false);
+//                btnSua.setVisible(false);
+//                btnXoa.setVisible(false);
+//                btnNhapExcel.setVisible(false);
+//                btnXuatExcel.setVisible(false);
+//                
+//                btn_hoan_thanh.setVisible(true);
+//                btn_tro_ve.setVisible(true);
+//                
+//                table.clearSelection();
+//                table.setEnabled(false);
+//            }
+//        });
         
         // khi ấn nút sửa
         btnSua.addMouseListener(new MouseAdapter() {
@@ -238,7 +239,7 @@ public class KhachHangGUI extends JPanel {
                 }
                 isEditing = true;
                 
-                lockInfor(false);
+                lockInforEdit();
                 
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
@@ -254,23 +255,23 @@ public class KhachHangGUI extends JPanel {
         });
         
         // khi ấn nút xóa
-        btnXoa.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (arrTfInfor.get(0).getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần xóa!");
-                    return;
-                }
-                
-                int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
-                if (confirmed == 0) { // xác nhận xóa
-                    khachHangBUS.deleteKhachHang(arrTfInfor.get(0).getText());
-                    blankInfor();
-                    table.clearSelection();
-                    reloadKH(khachHangBUS.getKhList());
-                }
-            }
-        });
+//        btnXoa.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if (arrTfInfor.get(0).getText().equals("")) {
+//                    JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần xóa!");
+//                    return;
+//                }
+//                
+//                int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
+//                if (confirmed == 0) { // xác nhận xóa
+//                    khachHangBUS.deleteKhachHang(arrTfInfor.get(0).getText());
+//                    blankInfor();
+//                    table.clearSelection();
+//                    reloadKH(khachHangBUS.getKhList());
+//                }
+//            }
+//        });
         
         // khi ấn nút nhập excel
         btnNhapExcel.addMouseListener(new MouseAdapter(){ 
@@ -414,6 +415,7 @@ public class KhachHangGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
+                lockInforAll();
                 
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
                 if (isEditing) isEditing = false;
@@ -543,9 +545,9 @@ public class KhachHangGUI extends JPanel {
                 arrTfInfor.get(3).setText(table.getModel().getValueAt(row, 3).toString());              
                 
                 if (isEditing) {
-                    lockInfor(false);
+                    lockInforEdit();
                 }
-                else lockInfor(true);
+                else lockInforAll();
             }
         });
         
@@ -594,11 +596,21 @@ public class KhachHangGUI extends JPanel {
     }
     
     // khóa khả năng thao tác với thông tin
-    public void lockInfor(boolean lock) {
-        arrTfInfor.get(1).setEditable(!lock);
-        arrTfInfor.get(2).setEditable(!lock);
-        arrTfInfor.get(3).setEditable(!lock);    
+    public void lockInforAll() {
+        for(int i=0; i<=3 ; i++){
+        arrTfInfor.get(i).setEditable(false);  
+        }
 
+    }
+    
+    public void lockInforAdd() {
+        for(int i=1; i<=3 ; i++){
+        arrTfInfor.get(i).setEditable(true);  
+        }
+    }
+    
+    public void lockInforEdit() {
+        arrTfInfor.get(2).setEditable(true);
     }
     
     public void blankInfor() {
