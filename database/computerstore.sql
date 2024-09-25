@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2024 at 10:36 AM
+-- Generation Time: Sep 25, 2024 at 10:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `computerstore`
+-- Database: `quanlymaytinh`
 --
 
 -- --------------------------------------------------------
@@ -28,12 +28,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `baohanh` (
-  `id_kh` varchar(6) DEFAULT NULL,
+  `id_bh` varchar(10) NOT NULL,
+  `id_kh` varchar(15) NOT NULL,
   `ten_sp` varchar(50) NOT NULL,
-  `serial` varchar(10) NOT NULL,
-  `ngay_mua` date NOT NULL,
-  `ngay_het_han` date NOT NULL
+  `Serial` varchar(15) NOT NULL,
+  `ngay_baohanh` date NOT NULL,
+  `ngay_tramay` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `baohanh`
+--
+
+INSERT INTO `baohanh` (`id_bh`, `id_kh`, `ten_sp`, `Serial`, `ngay_baohanh`, `ngay_tramay`) VALUES
+('BH002', '', 'abc', 'SP001004', '2024-09-24', '2024-10-01'),
+('BH003', '', 'abc', 'SP001004', '2024-09-24', '2024-10-01'),
+('BH004', '', 'abc', 'SP001004', '2024-09-24', '2024-10-01'),
+('HD002', '', 'abc', 'SP001003', '2024-09-24', '2025-09-24');
 
 -- --------------------------------------------------------
 
@@ -49,6 +60,16 @@ CREATE TABLE `cthoadon` (
   `don_gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `cthoadon`
+--
+
+INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUES
+('HD001', 'SP001', 'abc', 2, 210000),
+('HD002', 'SP001', 'abc', 1, 210000),
+('HD003', 'SP001', 'abc', 2, 210000),
+('HD004', 'SP001', 'abc', 1, 210000);
+
 -- --------------------------------------------------------
 
 --
@@ -62,6 +83,13 @@ CREATE TABLE `ctphieunhap` (
   `so_luong` int(5) NOT NULL,
   `don_gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ctphieunhap`
+--
+
+INSERT INTO `ctphieunhap` (`id_pn`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUES
+('PN001', 'SP001', 'abc', 6, 150000);
 
 -- --------------------------------------------------------
 
@@ -162,6 +190,18 @@ CREATE TABLE `ctsanpham` (
   `serial` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `ctsanpham`
+--
+
+INSERT INTO `ctsanpham` (`id_sp`, `serial`) VALUES
+('SP001', 'SP001001'),
+('SP001', 'SP001002'),
+('SP001', 'SP001003'),
+('SP001', 'SP001004'),
+('SP001', 'SP001005'),
+('SP001', 'SP001006');
+
 -- --------------------------------------------------------
 
 --
@@ -175,6 +215,16 @@ CREATE TABLE `hoadon` (
   `ngay_xuat` date NOT NULL,
   `tong_tien` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `hoadon`
+--
+
+INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VALUES
+('HD001', '124', 'US001', '2024-09-24', 420000),
+('HD002', '', 'US001', '2024-09-24', 210000),
+('HD003', '', 'US001', '2024-09-24', 420000),
+('HD004', 'KH001', 'US001', '2024-09-25', 210000);
 
 -- --------------------------------------------------------
 
@@ -190,6 +240,15 @@ CREATE TABLE `khachhang` (
   `enable` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `khachhang`
+--
+
+INSERT INTO `khachhang` (`id`, `ten`, `dia_chi`, `sdt`, `enable`) VALUES
+('KH001', 'ad', 'asd', '124', 1),
+('KH002', 'b2m', '159 aer', '033', 1),
+('KH003', 'Dell-P56-HD002342', '159 aer', '025555', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -203,6 +262,13 @@ CREATE TABLE `nhacungcap` (
   `sdt` varchar(15) NOT NULL,
   `enable` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `nhacungcap`
+--
+
+INSERT INTO `nhacungcap` (`id`, `ten`, `dia_chi`, `sdt`, `enable`) VALUES
+('CC001', 'a', 'a', '234', 1);
 
 -- --------------------------------------------------------
 
@@ -219,6 +285,16 @@ CREATE TABLE `phieubaohanh` (
   `id_hd` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `phieubaohanh`
+--
+
+INSERT INTO `phieubaohanh` (`id_kh`, `ten_sp`, `serial`, `ngay_mua`, `ngay_het_han`, `id_hd`) VALUES
+('KH001', 'ABC 111', 'SP001002', '2024-09-03', '2024-09-10', 'HD001'),
+('', 'abc', 'SP001004', '2024-09-24', '2025-09-24', 'HD003'),
+('', 'abc', 'SP001005', '2024-09-24', '2025-09-24', 'HD003'),
+('KH001', 'abc', 'SP001006', '2024-09-25', '2025-09-25', 'HD004');
+
 -- --------------------------------------------------------
 
 --
@@ -232,6 +308,13 @@ CREATE TABLE `phieunhap` (
   `ngay_nhap` date NOT NULL,
   `tong_tien` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `phieunhap`
+--
+
+INSERT INTO `phieunhap` (`id_pn`, `id_ncc`, `id_user`, `ngay_nhap`, `tong_tien`) VALUES
+('PN001', '', 'US001', '2024-09-24', 900000);
 
 -- --------------------------------------------------------
 
@@ -269,6 +352,13 @@ CREATE TABLE `sanpham` (
   `enable` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `sanpham`
+--
+
+INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_nhap`, `gia_ban`, `hang`, `img`, `enable`) VALUES
+('SP001', 'abc', 0, 150000, 210000, 'Acer', 'SP001.png', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -291,7 +381,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`, `enable`) VALUES
-('US001', 'admin', 'admin', 'Nam', '123', 'QU001', 'US001.png', 1);
+('US001', 'admin', 'admin', 'Nam', '123', 'QU001', 'US001.png', 1),
+('US002', '159', 'abbb', 'Nam', '021', 'QU001', 'null', 1);
 
 --
 -- Indexes for dumped tables
@@ -301,7 +392,7 @@ INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`,
 -- Indexes for table `baohanh`
 --
 ALTER TABLE `baohanh`
-  ADD PRIMARY KEY (`serial`);
+  ADD PRIMARY KEY (`id_bh`);
 
 --
 -- Indexes for table `cthoadon`

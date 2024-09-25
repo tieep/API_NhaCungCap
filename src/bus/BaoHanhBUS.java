@@ -32,11 +32,30 @@ public class BaoHanhBUS {
         ArrayList<BaoHanhDTO> res = new ArrayList<>();
         
         for (BaoHanhDTO bh : bhList) {
-            if ((bh.getNgayMua().isAfter(dateFrom) || bh.getNgayMua().isEqual(dateFrom)) && (bh.getNgayMua().isBefore(dateTo) || bh.getNgayMua().isEqual(dateTo))) {
+            if ((bh.getNgayBaoHanh().isAfter(dateFrom) || bh.getNgayBaoHanh().isEqual(dateFrom)) && (bh.getNgayBaoHanh().isBefore(dateTo) || bh.getNgayBaoHanh().isEqual(dateTo))) {
                 res.add(bh);
             }
         }
         
         return res;
+    }
+    
+    
+    
+    public String createNewId() {
+        String id = "BH";
+        int new_id = bhList.size() + 1;
+        
+        if (new_id <= 9) {
+            id += "00" + new_id;
+        }
+        else if (new_id <= 99) {
+            id += "0" + new_id;
+        }
+        else {
+            id += new_id;
+        }
+        
+        return id;
     }
 }
