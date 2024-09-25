@@ -1,11 +1,11 @@
 package gui;
 
-import bus.BaoHanhBUS;
+import bus.PhieuBaoHanhBUS;
 import bus.CTHoaDonBUS;
 import bus.CTSanPhamBUS;
 import bus.HoaDonBUS;
 import bus.SanPhamBUS;
-import dto.BaoHanhDTO;
+import dto.PhieuBaoHanhDTO;
 import dto.CTHoaDonDTO;
 import dto.CTSanPhamDTO;
 import dto.HoaDonDTO;
@@ -57,7 +57,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
     private SanPhamBUS sanPhamBUS = new SanPhamBUS();
     private HoaDonBUS hoaDonBUS = new HoaDonBUS();
     private CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
-    private BaoHanhBUS baoHanhBUS = new BaoHanhBUS();
+    private PhieuBaoHanhBUS baoHanhBUS = new PhieuBaoHanhBUS();
     private CTSanPhamBUS ctspBUS = new CTSanPhamBUS();
 
     private JPanel pnInfor, pnFilter, pnTable;
@@ -160,7 +160,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
         JPanel pn_table = new JPanel(new FlowLayout(1));
         
         String[] col = {
-            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Đơn giá"
+            "Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Giá bán"
         };
         modelCT = new DefaultTableModel(col, 0);
         tableCT = new JTable();
@@ -532,7 +532,7 @@ public class BanHangGUI extends JPanel implements ActionListener {
                 String serial = ctspBUS.createNewId(cthd.getIdSanPham());
                 CTSanPhamDTO ctsp = new CTSanPhamDTO(cthd.getIdSanPham(), serial);
                 LocalDate ngay_het_han = ngay_mua.plusYears(1);
-                BaoHanhDTO bh = new BaoHanhDTO(id_kh, cthd.getTenSanPham(), serial, ngay_mua, ngay_het_han);
+                PhieuBaoHanhDTO bh = new PhieuBaoHanhDTO(id_hd, id_kh, cthd.getTenSanPham(), serial, ngay_mua, ngay_het_han);
                 ctspBUS.addCTSP(ctsp);
                 baoHanhBUS.addBH(bh);
             }

@@ -152,13 +152,8 @@ public class SanPhamGUI extends JPanel {
             this.arrPnInfor.get(i).add(this.arrLbInfor.get(i));
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_desc.add(this.arrPnInfor.get(i));
+            this.arrTfInfor.get(i).setEditable(false);
         }
-        // khóa hết thông tin sản phẩm, không được tương tác
-        this.arrTfInfor.get(0).setEditable(false);
-        this.arrTfInfor.get(1).setEditable(false);
-        this.arrTfInfor.get(2).setEditable(false);
-        this.arrTfInfor.get(3).setEditable(false);
-        this.arrTfInfor.get(4).setEditable(false);
 
         JPanel pn_brand = new JPanel(new FlowLayout(0, 0, 0));
         pn_brand.setPreferredSize(d_pn);
@@ -248,7 +243,7 @@ public class SanPhamGUI extends JPanel {
         
         // thêm các nút
         pn_btn.add(btnThem);
-        pn_btn.add(btnSua);
+//        pn_btn.add(btnSua);
         pn_btn.add(btnXoa);
         pn_btn.add(btnNhapExcel);
         pn_btn.add(btnXuatExcel);
@@ -262,7 +257,7 @@ public class SanPhamGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
                 isEditing = false;
-                lockInfor(false);
+                lockInforAdd();
                 
                 arrTfInfor.get(0).setText(sanPhamBUS.createNewId());
                 arrTfInfor.get(2).setText("0");
@@ -285,30 +280,30 @@ public class SanPhamGUI extends JPanel {
         });
         
         // khi ấn nút sửa
-        btnSua.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (arrTfInfor.get(0).getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa!");
-                    return;
-                }
-                isEditing = true;
-                
-                lockInfor(false);
-                
-                btnThem.setVisible(false);
-                btnSua.setVisible(false);
-                btnXoa.setVisible(false);
-                btnNhapExcel.setVisible(false);
-                btnXuatExcel.setVisible(false);
-                
-                btn_hoan_thanh.setVisible(true);
-                btn_tro_ve.setVisible(true);
-                btn_chon_anh.setVisible(true);
-                
-                table.setEnabled(false);
-            }
-        });
+//        btnSua.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if (arrTfInfor.get(0).getText().equals("")) {
+//                    JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần sửa!");
+//                    return;
+//                }
+//                isEditing = true;
+//                
+//                lockInfor(false);
+//                
+//                btnThem.setVisible(false);
+//                btnSua.setVisible(false);
+//                btnXoa.setVisible(false);
+//                btnNhapExcel.setVisible(false);
+//                btnXuatExcel.setVisible(false);
+//                
+//                btn_hoan_thanh.setVisible(true);
+//                btn_tro_ve.setVisible(true);
+//                btn_chon_anh.setVisible(true);
+//                
+//                table.setEnabled(false);
+//            }
+//        });
         
         // khi ấn nút xóa
         btnXoa.addMouseListener(new MouseAdapter() {
@@ -487,6 +482,7 @@ public class SanPhamGUI extends JPanel {
                 
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
                 if (isEditing) isEditing = false;
+                lockInforAll();
                 
                 btnThem.setVisible(true);
                 btnSua.setVisible(true);
@@ -707,10 +703,7 @@ public class SanPhamGUI extends JPanel {
                 lbImgSanPham.setText("");
                 lbImgSanPham.setIcon(icon_sp.createIcon());
                 
-                if (isEditing) {
-                    lockInfor(false);
-                }
-                else lockInfor(true);
+                lockInforAll();
             }
         });
         
@@ -774,9 +767,15 @@ public class SanPhamGUI extends JPanel {
     }
     
     // khóa khả năng thao tác với thông tin
-    public void lockInfor(boolean lock) {
-        arrTfInfor.get(1).setEditable(!lock);
-        cbBrand.setEnabled(!lock);
+    public void lockInforAdd() {
+        arrTfInfor.get(1).setEditable(true);
+        cbBrand.setEnabled(true);
+    }
+    public void lockInforAll() {
+        for(int i=0; i<=4; i++){
+            arrTfInfor.get(1).setEditable(false);
+        }
+        cbBrand.setEnabled(false);
     }
     
     public void blankInfor() {

@@ -133,8 +133,9 @@ public class NhaCungCapGUI extends JPanel {
             this.arrPnInfor.get(i).add(this.arrLbInfor.get(i));
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_desc.add(this.arrPnInfor.get(i));
+            this.arrTfInfor.get(i).setEditable(false);
         }
-        this.arrTfInfor.get(0).setEditable(false); // khóa luôn khả năng chỉnh sửa mã sản phẩm
+//        this.arrTfInfor.get(0).setEditable(false); // khóa luôn khả năng chỉnh sửa mã sản phẩm
         
         // create panel button
         JPanel pn_btn = new JPanel(new FlowLayout(1, 70, 10));
@@ -211,7 +212,7 @@ public class NhaCungCapGUI extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
                 isEditing = false;
-                lockInfor(false);
+                lockInforAdd();
                 
                 arrTfInfor.get(0).setText(nhaCungCapBUS.createNewId());
                 
@@ -239,7 +240,7 @@ public class NhaCungCapGUI extends JPanel {
                 }
                 isEditing = true;
                 
-                lockInfor(false);
+                lockInforEdit();
                 
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
@@ -415,6 +416,7 @@ public class NhaCungCapGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
+                lockInforAll();
                 
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
                 if (isEditing) isEditing = false;
@@ -544,9 +546,9 @@ public class NhaCungCapGUI extends JPanel {
                 arrTfInfor.get(3).setText(table.getModel().getValueAt(row, 3).toString());              
                 
                 if (isEditing) {
-                    lockInfor(false);
+                    lockInforEdit();
                 }
-                else lockInfor(true);
+                else lockInforAll();
             }
         });
         
@@ -595,12 +597,20 @@ public class NhaCungCapGUI extends JPanel {
     }
     
     // khóa khả năng thao tác với thông tin
-    public void lockInfor(boolean lock) {
-    //    arrTfInfor.get(0).setEditable(!lock);
-        arrTfInfor.get(1).setEditable(!lock);
-        arrTfInfor.get(2).setEditable(!lock);
-        arrTfInfor.get(3).setEditable(!lock);    
-
+    public void lockInforAll() {
+        for(int i=0; i<=3; i++){
+            arrTfInfor.get(i).setEditable(false);
+        }   
+    }
+    
+    public void lockInforAdd() {
+        for(int i=1; i<=3; i++){
+            arrTfInfor.get(i).setEditable(true);
+        }   
+    }
+    
+    public void lockInforEdit() {
+        arrTfInfor.get(2).setEditable(true);
     }
     
     public void blankInfor() {
