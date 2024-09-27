@@ -518,7 +518,7 @@ public class NhanVienGUI extends JPanel {
                     String newImg = imgNhanVien;
 
                     // kiem tra null du lieu
-                    if (pass.isEmpty() || ten.isEmpty() || sdt.isEmpty() || quyen.isEmpty()) {
+                    if (pass.isEmpty() || ten.isEmpty() || sdt.isEmpty() || quyen.isEmpty() || quyen == null) {
                         JOptionPane.showMessageDialog(null, "Không được bỏ trống thông tin!", "Lỗi",
                                 JOptionPane.ERROR_MESSAGE);
 
@@ -528,7 +528,7 @@ public class NhanVienGUI extends JPanel {
                         arrTfInfor.get(1).requestFocus();
 
                     } else if (!isValidName(ten)) { // kiem tra hop le ten
-                        JOptionPane.showMessageDialog(null, "Tên không hợp lệ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Tên không hợp lệ! Phải có ít nhất 1 khoảng trắng ở giữa", "Lỗi", JOptionPane.ERROR_MESSAGE);
                         arrTfInfor.get(2).requestFocus();
 
                     } else if (!isValidPhoneNumber(sdt)) { // kiem tra hop le so dien thoai
@@ -958,10 +958,17 @@ public class NhanVienGUI extends JPanel {
     }
 
     public boolean isValidName(String name) {
+        // Kiểm tra nếu chuỗi rỗng hoặc chỉ chứa khoảng trắng
         if (name.trim().isEmpty()) {
-            return false; // khong hop le
+            return false; // không hợp lệ
         }
-        return name.contains(" "); // done
+    
+        // Biểu thức chính quy đơn giản hơn: phải có ít nhất 1 khoảng trắng giữa các từ
+        String regex = "^[\\p{L}]+(\\s[\\p{L}]+)+$";
+        return name.matches(regex); // Trả về true nếu tên hợp lệ, ngược lại là false
     }
+    
+    
+    
 
 }

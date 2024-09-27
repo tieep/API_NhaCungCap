@@ -34,7 +34,7 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
     private Color color3 = Color.decode("#00E0C7");
     
     private String idKhach = "";
-    private JButton btnChon, btnQuayVe;
+    private JButton btnChon, btnQuayVe, btnThemKhach;
     private TableRowSorter<TableModel> rowSorter;
     private JTable tableKH;
     private DefaultTableModel modelKH;
@@ -50,7 +50,7 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
         this.setSize(700, 500);
         this.setLocationRelativeTo(null);
         this.setUndecorated(true);
-        this.setLayout(new BorderLayout());        
+        this.setLayout(new BorderLayout());     
         
         // tim kiem
         JPanel pn_tim_kiem = new JPanel(new FlowLayout(1, 10, 10));
@@ -68,6 +68,9 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
                 else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("KH")) {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
                 } 
+                else if (txt.trim().substring(0, 1).equals("0")) {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^"+ txt +".*", 2));
+                }
                 else {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^"+ txt +".*", 1));
                 }
@@ -82,6 +85,9 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
                 else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("KH")) {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
                 } 
+                else if (txt.trim().substring(0, 1).equals("0")) {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^"+ txt +".*", 2));
+                }
                 else {
                     rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^"+ txt +".*", 1));
                 }
@@ -103,6 +109,16 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
  
         pn_tim_kiem.add(lb_tim_kiem);
         pn_tim_kiem.add(tf_tim_kiem);
+        
+        
+        // btn them khach
+        this.btnThemKhach = new JButton("Thêm khách hàng");
+        this.btnThemKhach.setPreferredSize(new Dimension(150, 30));
+        this.btnThemKhach.setForeground(this.colorBackground);
+        this.btnThemKhach.setBackground(color2);
+        this.btnThemKhach.addActionListener(this);
+        
+        pn_tim_kiem.add(this.btnThemKhach);
         
         // table
         JPanel pn_table = new JPanel(new FlowLayout(1, 25, 10));
@@ -207,6 +223,11 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
             }
             idKhach = tableKH.getModel().getValueAt(row, 0).toString();
             dispose();
+        }
+        else if (e.getSource().equals(this.btnThemKhach)) {
+            new ThemKhachHangGUI();
+            khachHangBUS.list();
+            reloadKH(khachHangBUS.getKhList());
         }
         else if (e.getSource().equals(this.btnQuayVe)) {
             dispose();
