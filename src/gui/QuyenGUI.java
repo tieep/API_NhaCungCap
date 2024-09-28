@@ -206,13 +206,17 @@ public class QuyenGUI extends JPanel {
             this.arrCbXoa.add(new JCheckBox());
             this.arrCbXoa.get(i).setPreferredSize(d_tf);
             
-            if(i >= 5){
-                this.arrCbXoa.get(i).setEnabled(false);
-                this.arrCbSua.get(i).setEnabled(false);
-                if (i >= 7) {
-                    this.arrCbThem.get(i).setEnabled(false);
-                }
-            }
+//            if(i >= 5){
+//                this.arrCbXoa.get(i).setEnabled(false);
+//                this.arrCbSua.get(i).setEnabled(false);
+//                if (i >= 7) {
+//                    this.arrCbThem.get(i).setEnabled(false);
+//                }
+//            }
+            this.arrCbXem.get(i).setEnabled(false);
+            this.arrCbThem.get(i).setEnabled(false);
+            this.arrCbSua.get(i).setEnabled(false);
+            this.arrCbXoa.get(i).setEnabled(false);
 
             this.arrLbCheckBox.get(i).setForeground(color_font);
             this.arrLbCheckBox.get(i).setFont(font_infor);
@@ -313,10 +317,10 @@ public class QuyenGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn quyền cần sửa!");
                     return;
                 }
-                else if (arrTfInfor.get(0).getText().equals("QU001")) {
-                    JOptionPane.showMessageDialog(null, "Không được phép sửa quyền admin!");
-                    return;
-                }
+//                else if (arrTfInfor.get(0).getText().equals("QU001")) {
+//                    JOptionPane.showMessageDialog(null, "Không được phép sửa quyền admin!");
+//                    return;
+//                }
                 isEditing = true;
                 
                 lockInfor(false);
@@ -387,6 +391,15 @@ public class QuyenGUI extends JPanel {
                   
                         reloadQuyen(quyenBUS.getQuyenList());
                         blankInfor();
+                        lockInfor(true);
+                        btnThem.setVisible(true);
+                        btnSua.setVisible(true);
+                        btnXoa.setVisible(true);
+
+                        btn_hoan_thanh.setVisible(false);
+                        btn_tro_ve.setVisible(false);
+                        
+                        table.setEnabled(true);
                     }
                 }
             }
@@ -487,13 +500,16 @@ public class QuyenGUI extends JPanel {
         String[] col = {
             "Mã quyền", "Tên quyền"
         };
-        this.model = new DefaultTableModel(col, 0){
+        this.model = new DefaultTableModel(col, 0) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
+
         this.table = new JTable(model);
+
         rowSorter = new TableRowSorter<TableModel>(model);
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);
@@ -506,6 +522,7 @@ public class QuyenGUI extends JPanel {
         this.loadQuyen();
         
         pn_table.add(scroll);
+        
         
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -695,14 +712,36 @@ public class QuyenGUI extends JPanel {
             this.arrCbSua.get(i).setEnabled(!lock);
             this.arrCbXoa.get(i).setEnabled(!lock);
              
-            if(i >= 5){
-                this.arrCbXoa.get(i).setEnabled(false);
-                this.arrCbSua.get(i).setEnabled(false);
-                if (i >= 7) {
-                    this.arrCbThem.get(i).setEnabled(false);
-                }
-            }
+//            if(i >= 5){
+//                this.arrCbXoa.get(i).setEnabled(false);
+//                this.arrCbSua.get(i).setEnabled(false);
+//                if (i >= 7) {
+//                    this.arrCbThem.get(i).setEnabled(false);
+//                }
+//            }
         }
+        this.arrCbThem.get(1).setEnabled(false);
+        this.arrCbThem.get(2).setEnabled(false);
+        this.arrCbThem.get(5).setEnabled(false);
+        this.arrCbThem.get(6).setEnabled(false);
+        this.arrCbThem.get(7).setEnabled(false);
+        this.arrCbThem.get(8).setEnabled(false);
+        this.arrCbThem.get(9).setEnabled(false);
+        
+        this.arrCbSua.get(5).setEnabled(false);
+        this.arrCbSua.get(6).setEnabled(false);
+        this.arrCbSua.get(7).setEnabled(false);
+        this.arrCbSua.get(8).setEnabled(false);
+        this.arrCbSua.get(9).setEnabled(false);
+
+        this.arrCbXoa.get(1).setEnabled(false);
+        this.arrCbXoa.get(2).setEnabled(false);
+        this.arrCbXoa.get(5).setEnabled(false);
+        this.arrCbXoa.get(6).setEnabled(false);
+        this.arrCbXoa.get(7).setEnabled(false);
+        this.arrCbXoa.get(8).setEnabled(false);
+        this.arrCbXoa.get(9).setEnabled(false);
+
     }
     
     public void blankInfor() {

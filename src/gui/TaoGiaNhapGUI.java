@@ -152,6 +152,7 @@ public class TaoGiaNhapGUI extends JDialog implements ActionListener {
             
             if (this.slider.getValue() == 0) {
                 JOptionPane.showMessageDialog(null, "Lợi nhuận tối thiểu là 1%");
+                this.giaNhap = 0;
                 return;
             }
             

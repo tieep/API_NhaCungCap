@@ -70,18 +70,17 @@ public class NhanVienGUI extends JPanel {
     private BufferedImage bufferImg = null;
     private JButton btnThem, btnSua, btnXoa, btnNhapExcel, btnXuatExcel;
 
-        
     private JTable table;
     private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel model;
     private String imgNhanVien = "null";
     private UserBUS userBUS = new UserBUS();
     private QuyenBUS quyenBUS = new QuyenBUS();
-    
+
     private boolean quyenThem, quyenSua, quyenXoa;
-    
+
     private boolean isEditing = false;
-    
+
     public NhanVienGUI(int width, int height, boolean quyenThem, boolean quyenSua, boolean quyenXoa) {
         this.width = width;
         this.height = height;
@@ -90,49 +89,49 @@ public class NhanVienGUI extends JPanel {
         this.quyenXoa = quyenXoa;
         this.init();
     }
-    
+
     public void init() {
         this.setSize(this.width, this.height);
         this.setBackground(this.colorBackground);
-        
+
         this.pnInfor = this.createPnInfor();
         this.pnFilter = this.createPnFilter();
         this.pnTable = this.createPnTable();
-        
+
         this.setLayout(new BorderLayout());
         this.add(this.pnInfor, BorderLayout.NORTH);
         this.add(this.pnFilter, BorderLayout.CENTER);
         this.add(this.pnTable, BorderLayout.SOUTH);
     }
-    
+
     public JPanel createPnInfor() {
         JPanel result = new JPanel(new FlowLayout(1, 0, 25));
         result.setPreferredSize(new Dimension(this.width, 290));
-        
+
         JPanel pn_infor = new JPanel(new BorderLayout());
         pn_infor.setPreferredSize(new Dimension(this.width - 100, 250));
         pn_infor.setBackground(this.color1);
         pn_infor.setBorder(BorderFactory.createLineBorder(color1, 2));
-        
+
         // create panel avatar
         JPanel pn_avatar = new JPanel(new FlowLayout(1, 0, 25));
         pn_avatar.setPreferredSize(new Dimension(250, 250));
-        
+
         this.lbImgNhanVien = new JLabel("Image", JLabel.CENTER);
         this.lbImgNhanVien.setPreferredSize(new Dimension(175, 200));
         this.lbImgNhanVien.setBorder(BorderFactory.createLineBorder(Color.black));
-        
+
         pn_avatar.add(this.lbImgNhanVien);
-        
+
         // create panel description
         JPanel pn_desc = new JPanel(new FlowLayout(1, 15, 10));
 
-        String[] thuoc_tinh = {"Mã nhân viên", "Mật khẩu", "Tên nhân viên", "Số điện thoại"};
+        String[] thuoc_tinh = { "Mã nhân viên", "Mật khẩu", "Tên nhân viên", "Số điện thoại" };
         int len = thuoc_tinh.length;
         this.arrPnInfor = new ArrayList<>();
         this.arrLbInfor = new ArrayList<>();
         this.arrTfInfor = new ArrayList<>();
-        
+
         Dimension d_pn = new Dimension(400, 30);
         Dimension d_lb = new Dimension(130, 30);
         Dimension d_tf = new Dimension(220, 30);
@@ -141,7 +140,7 @@ public class NhanVienGUI extends JPanel {
         for (int i = 0; i < len; i++) {
             this.arrPnInfor.add(new JPanel(new FlowLayout(0, 0, 0)));
             this.arrPnInfor.get(i).setPreferredSize(d_pn);
-            
+
             this.arrLbInfor.add(new JLabel(thuoc_tinh[i]));
             this.arrLbInfor.get(i).setPreferredSize(d_lb);
             this.arrTfInfor.add(new JTextField());
@@ -151,47 +150,46 @@ public class NhanVienGUI extends JPanel {
             this.arrLbInfor.get(i).setFont(font_infor);
             this.arrTfInfor.get(i).setForeground(color_font);
             this.arrTfInfor.get(i).setFont(font_infor);
-            
+
             this.arrPnInfor.get(i).add(this.arrLbInfor.get(i));
             this.arrPnInfor.get(i).add(this.arrTfInfor.get(i));
             pn_desc.add(this.arrPnInfor.get(i));
             this.arrTfInfor.get(i).setEditable(false);
         }
         // Mặc định khóa các thuộc tính id, tên, giới tính, sđt
-        
-        
+
         JPanel pn_gioi_tinh = new JPanel(new FlowLayout(0, 0, 0));
         pn_gioi_tinh.setPreferredSize(d_pn);
         pn_gioi_tinh.setForeground(color_font);
         pn_gioi_tinh.setFont(font_infor);
-        
+
         JLabel lb_gioitinh = new JLabel("Giới tính");
         lb_gioitinh.setPreferredSize(d_lb);
         lb_gioitinh.setForeground(color_font);
         lb_gioitinh.setFont(font_infor);
-        
-        String[] gt = {"Nam", "Nữ"};
+
+        String[] gt = { "Nam", "Nữ" };
         this.cbGioiTinh = new JComboBox(gt);
         this.cbGioiTinh.setPreferredSize(d_tf);
         this.cbGioiTinh.setForeground(color_font);
         this.cbGioiTinh.setFont(font_infor);
         this.cbGioiTinh.setEnabled(false); // Mặc định khóa
-        
+
         pn_gioi_tinh.add(lb_gioitinh);
         pn_gioi_tinh.add(this.cbGioiTinh);
-        
+
         JPanel pn_quyen = new JPanel(new FlowLayout(0, 0, 0));
         pn_quyen.setPreferredSize(d_pn);
         pn_quyen.setForeground(color_font);
         pn_quyen.setFont(font_infor);
-        
+
         JLabel lb_quyen = new JLabel("Quyền");
         lb_quyen.setPreferredSize(d_lb);
         lb_quyen.setForeground(color_font);
         lb_quyen.setFont(font_infor);
-        
+
         loadQuyen();
-        
+
         Vector<QuyenDTO> quyen = new Vector<>();
         for (QuyenDTO q : quyenBUS.getQuyenList()) {
             if (q.isEnable()) {
@@ -203,31 +201,31 @@ public class NhanVienGUI extends JPanel {
         this.cbQuyen.setForeground(color_font);
         this.cbQuyen.setFont(font_infor);
         this.cbQuyen.setEnabled(false);
-        
+
         pn_quyen.add(lb_quyen);
         pn_quyen.add(this.cbQuyen);
-        
+
         pn_desc.add(pn_gioi_tinh);
         pn_desc.add(pn_quyen);
-        
+
         // create panel button
         JPanel pn_btn = new JPanel(new FlowLayout(1, 25, 10));
         pn_btn.setPreferredSize(new Dimension(200, 250));
-        
+
         // các nút chức năng mặc định
         btnThem = new JButton("Thêm");
         btnSua = new JButton("Sửa");
         btnXoa = new JButton("Xóa");
         btnNhapExcel = new JButton("Nhập Excel");
         btnXuatExcel = new JButton("Xuất Excel");
-        
+
         showCN();
-        
+
         // các nút chức năng phụ
         JButton btn_hoan_thanh = new JButton("Hoàn thành");
         JButton btn_tro_ve = new JButton("Trở về");
         JButton btn_chon_anh = new JButton("Chọn ảnh");
-        
+
         // Thiết kế giao diện nút
         Dimension d_btn = new Dimension(150, 30);
         btnThem.setPreferredSize(d_btn);
@@ -235,14 +233,14 @@ public class NhanVienGUI extends JPanel {
         btnXoa.setPreferredSize(d_btn);
         btnNhapExcel.setPreferredSize(d_btn);
         btnXuatExcel.setPreferredSize(d_btn);
-        
+
         btn_hoan_thanh.setPreferredSize(d_btn);
         btn_tro_ve.setPreferredSize(d_btn);
         btn_chon_anh.setPreferredSize(d_btn);
         btn_hoan_thanh.setVisible(false);
         btn_tro_ve.setVisible(false);
         btn_chon_anh.setVisible(false);
-        
+
         Color color_button = this.color2;
         btnThem.setBackground(color_button);
         btnSua.setBackground(color_button);
@@ -253,7 +251,7 @@ public class NhanVienGUI extends JPanel {
         btn_hoan_thanh.setBackground(color_button);
         btn_tro_ve.setBackground(color_button);
         btn_chon_anh.setBackground(color_button);
-        
+
         Color color_font_btn = this.colorBackground;
         btnThem.setForeground(color_font_btn);
         btnSua.setForeground(color_font_btn);
@@ -264,7 +262,7 @@ public class NhanVienGUI extends JPanel {
         btn_hoan_thanh.setForeground(color_font_btn);
         btn_tro_ve.setForeground(color_font_btn);
         btn_chon_anh.setForeground(color_font_btn);
-        
+
         Font font_btn = new Font("Segoe UI", Font.BOLD, 13);
         btnThem.setFont(font_btn);
         btnSua.setFont(font_btn);
@@ -275,7 +273,7 @@ public class NhanVienGUI extends JPanel {
         btn_hoan_thanh.setFont(font_btn);
         btn_tro_ve.setFont(font_btn);
         btn_chon_anh.setFont(font_btn);
-        
+
         // thêm các nút
         pn_btn.add(btnThem);
         pn_btn.add(btnSua);
@@ -285,7 +283,7 @@ public class NhanVienGUI extends JPanel {
         pn_btn.add(btn_hoan_thanh);
         pn_btn.add(btn_tro_ve);
         pn_btn.add(btn_chon_anh);
-        
+
         // khi ấn nút thêm
         btnThem.addMouseListener(new MouseAdapter() {
             @Override
@@ -294,22 +292,22 @@ public class NhanVienGUI extends JPanel {
                 lockInforAdd();
                 isEditing = false;
                 arrTfInfor.get(0).setText(userBUS.createNewId());
-                
+
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
                 btnXoa.setVisible(false);
                 btnNhapExcel.setVisible(false);
                 btnXuatExcel.setVisible(false);
-                
+
                 btn_hoan_thanh.setVisible(true);
                 btn_tro_ve.setVisible(true);
                 btn_chon_anh.setVisible(true);
-                
+
                 table.clearSelection();
                 table.setEnabled(false);
             }
         });
-        
+
         // khi ấn nút sửa
         btnSua.addMouseListener(new MouseAdapter() {
             @Override
@@ -318,30 +316,30 @@ public class NhanVienGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần sửa!");
                     return;
                 }
-//                else if (arrTfInfor.get(0).getText().equals("US001")) {
-//                    JOptionPane.showMessageDialog(null, "Không được phép sửa tài khoản admin!");
-//                    return;
-//                }
+                // else if (arrTfInfor.get(0).getText().equals("US001")) {
+                // JOptionPane.showMessageDialog(null, "Không được phép sửa tài khoản admin!");
+                // return;
+                // }
                 isEditing = true;
-                
-//                arrTfInfor.get(1).setEditable(true);
-                
+
+                // arrTfInfor.get(1).setEditable(true);
+
                 lockInforEdit();
-                
+
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
                 btnXoa.setVisible(false);
                 btnNhapExcel.setVisible(false);
                 btnXuatExcel.setVisible(false);
-                
+
                 btn_hoan_thanh.setVisible(true);
                 btn_tro_ve.setVisible(true);
                 btn_chon_anh.setVisible(true);
-                
+
                 table.setEnabled(false);
             }
         });
-        
+
         // khi ấn nút xóa
         btnXoa.addMouseListener(new MouseAdapter() {
             @Override
@@ -350,7 +348,7 @@ public class NhanVienGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần xóa!");
                     return;
                 }
-                
+
                 int cnt = 0;
                 for (UserDTO user : userBUS.getUserList()) {
                     if (user.getQuyen().equals("QU001") && user.isEnable()) {
@@ -358,12 +356,12 @@ public class NhanVienGUI extends JPanel {
                     }
                 }
                 System.out.println(cnt);
-                
+
                 if (cnt < 2) {
                     JOptionPane.showMessageDialog(null, "Không thể xóa admin duy nhất!");
                     return;
                 }
-                
+
                 int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (confirmed == 0) { // xác nhận xóa
                     userBUS.deleteUser(arrTfInfor.get(0).getText());
@@ -373,9 +371,9 @@ public class NhanVienGUI extends JPanel {
                 }
             }
         });
-        
+
         // khi ấn nút nhập excel
-        btnNhapExcel.addMouseListener(new MouseAdapter(){ 
+        btnNhapExcel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 File excelFile;
@@ -399,7 +397,7 @@ public class NhanVienGUI extends JPanel {
                             String id = excelRow.getCell(0).getStringCellValue();
                             String pass = excelRow.getCell(1).getStringCellValue();
                             String ten = excelRow.getCell(2).getStringCellValue();
-                            String gioi_tinh = excelRow.getCell(3).getStringCellValue();                            
+                            String gioi_tinh = excelRow.getCell(3).getStringCellValue();
                             String sdt = excelRow.getCell(4).getStringCellValue();
                             String quyen = excelRow.getCell(5).getStringCellValue();
                             String img = excelRow.getCell(6).getStringCellValue();
@@ -418,15 +416,15 @@ public class NhanVienGUI extends JPanel {
                 for (int i = 0; i < listAccExcel.size(); i++) {
                     UserDTO user = listAccExcel.get(i);
                     UserDTO us = new UserDTO(
-                            user.getIdUser(), user.getPassword(), user.getTenUser(), user.getGioiTinh(), user.getSdt(), user.getQuyen(), user.getImgUser(), true
-                    );
+                            user.getIdUser(), user.getPassword(), user.getTenUser(), user.getGioiTinh(), user.getSdt(),
+                            user.getQuyen(), user.getImgUser(), true);
                     userBUS.updateUser(us);
                 }
             }
         });
-        
+
         // khi ấn xuất excel
-        btnXuatExcel.addMouseListener(new MouseAdapter(){
+        btnXuatExcel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
@@ -465,83 +463,123 @@ public class NhanVienGUI extends JPanel {
                 }
             }
         });
-        
+
         // khi ấn nút hoàn thành
         btn_hoan_thanh.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int confirmed;
-                if (isEditing) { // đang trong chế độ sửa
-                    confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhân viên", "", JOptionPane.YES_NO_OPTION);
-                    if (confirmed == 0) { // xác nhận sửa
-                        String id = arrTfInfor.get(0).getText();
-                        String pass = arrTfInfor.get(1).getText();
-                        String ten = arrTfInfor.get(2).getText();
-                        String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
-                        String sdt = arrTfInfor.get(3).getText();
-                        QuyenDTO quyenDTO = (QuyenDTO)cbQuyen.getSelectedItem();
-                        String quyen = quyenDTO.getIdQuyen();
-                        String newImg = imgNhanVien;
-                        
+                if (isEditing) { // Đang trong chế độ sửa
+                    String id = arrTfInfor.get(0).getText();
+                    String pass = arrTfInfor.get(1).getText();
+                    String ten = arrTfInfor.get(2).getText();
+                    String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
+                    String sdt = arrTfInfor.get(3).getText();
+                    QuyenDTO quyenDTO = (QuyenDTO) cbQuyen.getSelectedItem();
+                    String quyen = quyenDTO.getIdQuyen();
+                    String newImg = imgNhanVien;
+
+                    // check null
+                    if (pass == null || pass.equals("")) {
+                        JOptionPane.showMessageDialog(null, "Không được bỏ trống thông tin!", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
+                        arrTfInfor.get(1).requestFocus();
+                        return;
+
+                    } else if (!validatePassword(pass).equals("done")) { // kiem tra hop le mat khau
+                        String s = validatePassword(pass);
+                        JOptionPane.showMessageDialog(null, s, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        arrTfInfor.get(1).requestFocus();
+                        return;
+                    }
+
+                    // Hiển thị xác nhận sửa sau khi kiểm tra lỗi
+                    confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận sửa nhân viên", "",
+                            JOptionPane.YES_NO_OPTION);
+                    if (confirmed == 0) { // Xác nhận sửa
+                        // Nếu tất cả điều kiện hợp lệ, tiến hành cập nhật thông tin người dùng
                         UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
                         userBUS.updateUser(user);
-                        
+
                         saveImg();
                         reloadUser(userBUS.getUserList());
-                        
+
                         JOptionPane.showMessageDialog(null, "Sửa thành công", "OK", JOptionPane.INFORMATION_MESSAGE);
                     }
-                }
-                else { // đang trong chế độ thêm
-                    confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận thêm nhân viên", "", JOptionPane.YES_NO_OPTION);
-                    if (confirmed == 0) { // xác nhận thêm
-                        String id = arrTfInfor.get(0).getText();
-                        String pass = arrTfInfor.get(1).getText();
-                        String ten = arrTfInfor.get(2).getText();
-                        String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
-                        String sdt = arrTfInfor.get(3).getText();
-                        QuyenDTO quyenDTO = (QuyenDTO)cbQuyen.getSelectedItem();
-                        String quyen = quyenDTO.getIdQuyen();
-                        String newImg = imgNhanVien;
-                        
-                        UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
-                        userBUS.addUser(user);
-                        
-                        saveImg();                        
-                        reloadUser(userBUS.getUserList());
+                } else { // đang trong chế độ thêm
+                    // Đang trong chế độ thêm
+                    String id = arrTfInfor.get(0).getText();
+                    String pass = arrTfInfor.get(1).getText();
+                    String ten = arrTfInfor.get(2).getText();
+                    String gt = (String) cbGioiTinh.getItemAt(cbGioiTinh.getSelectedIndex());
+                    String sdt = arrTfInfor.get(3).getText();
+                    QuyenDTO quyenDTO = (QuyenDTO) cbQuyen.getSelectedItem();
+                    String quyen = quyenDTO.getIdQuyen();
+                    String newImg = imgNhanVien;
 
-                        blankInfor();
+                    // kiem tra null du lieu
+                    if (pass.isEmpty() || ten.isEmpty() || sdt.isEmpty() || quyen.isEmpty() || quyen == null) {
+                        JOptionPane.showMessageDialog(null, "Không được bỏ trống thông tin!", "Lỗi",
+                                JOptionPane.ERROR_MESSAGE);
+
+                    } else if (!validatePassword(pass).equals("done")) { // kiem tra hop le mat khau
+                        String s = validatePassword(pass);
+                        JOptionPane.showMessageDialog(null, s, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        arrTfInfor.get(1).requestFocus();
+
+                    } else if (!isValidName(ten)) { // kiem tra hop le ten
+                        JOptionPane.showMessageDialog(null, "Tên không hợp lệ! Phải có ít nhất 1 khoảng trắng ở giữa", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        arrTfInfor.get(2).requestFocus();
+
+                    } else if (!isValidPhoneNumber(sdt)) { // kiem tra hop le so dien thoai
+                        JOptionPane.showMessageDialog(null,
+                                "Số điện thoại không hợp lệ!",
+                                "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        arrTfInfor.get(3).requestFocus();
+
+                    } else { // xac nhan them
+                        confirmed = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm nhân viên không?",
+                                "Xác nhận thêm nhân viên", JOptionPane.YES_NO_OPTION);
+                        if (confirmed == JOptionPane.YES_OPTION) {
+                            UserDTO user = new UserDTO(id, pass, ten, gt, sdt, quyen, newImg, true);
+                            userBUS.addUser(user);
+                            saveImg();
+                            reloadUser(userBUS.getUserList());
+                            blankInfor();
+                        }
                     }
+
                 }
             }
         });
-        
+
         // khi ấn nút trở về
         btn_tro_ve.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 blankInfor();
                 lockInforAll();
-                
+
                 // nếu đang trong chế độ sửa khi thoát ra chỉnh isEditing = false
-                if (isEditing) isEditing = false;
-                
+                if (isEditing)
+                    isEditing = false;
+
                 btnThem.setVisible(true);
                 btnSua.setVisible(true);
                 btnXoa.setVisible(true);
                 btnNhapExcel.setVisible(true);
                 btnXuatExcel.setVisible(true);
-                
+
                 showCN();
-                
+
                 btn_hoan_thanh.setVisible(false);
                 btn_tro_ve.setVisible(false);
                 btn_chon_anh.setVisible(false);
-                
+
                 table.setEnabled(true);
             }
         });
-        
+
         // khi ấn nút chọn ảnh
         btn_chon_anh.addMouseListener(new MouseAdapter() {
             @Override
@@ -555,7 +593,7 @@ public class NhanVienGUI extends JPanel {
                         File file = fc.getSelectedFile();
                         bufferImg = ImageIO.read(file);
                         // set tên ảnh là tên mã nhân viên
-                        imgNhanVien = arrTfInfor.get(0).getText().concat(".png");      
+                        imgNhanVien = arrTfInfor.get(0).getText().concat(".png");
 
                         lbImgNhanVien.setText("");
                         lbImgNhanVien.setIcon(new ImageIcon(bufferImg.getScaledInstance(175, 200, Image.SCALE_SMOOTH)));
@@ -565,36 +603,34 @@ public class NhanVienGUI extends JPanel {
                 }
             }
         });
-        
+
         // add components
         pn_infor.add(pn_avatar, BorderLayout.WEST);
         pn_infor.add(pn_desc, BorderLayout.CENTER);
         pn_infor.add(pn_btn, BorderLayout.EAST);
-        
+
         result.add(pn_infor);
-        
+
         return result;
     }
-    
+
     public JPanel createPnFilter() {
-        JPanel pn_filter = new JPanel(new FlowLayout(1, 20, 20)); 
-        
+        JPanel pn_filter = new JPanel(new FlowLayout(1, 20, 20));
+
         // Thanh tìm kiếm theo tên hoặc id nhân viên
         JLabel lb_tim_kiem = new JLabel("Tìm kiếm", JLabel.CENTER);
         JTextField tf_tim_kiem = new JTextField();
         tf_tim_kiem.setPreferredSize(new Dimension(200, 30));
-        tf_tim_kiem.getDocument().addDocumentListener(new DocumentListener() { 
+        tf_tim_kiem.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 String txt = tf_tim_kiem.getText();
                 if (txt.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
-                }
-                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("US")) {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
-                } 
-                else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^"+ txt +".*", 1));
+                } else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("US")) {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt + ".*", 1));
                 }
             }
 
@@ -603,27 +639,25 @@ public class NhanVienGUI extends JPanel {
                 String txt = tf_tim_kiem.getText();
                 if (txt.trim().length() == 0) {
                     rowSorter.setRowFilter(null);
-                }
-                else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("NV")) {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));                    
-                } 
-                else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^"+ txt +".*", 1));
+                } else if (txt.trim().length() >= 2 && txt.trim().substring(0, 2).toUpperCase().equals("NV")) {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt, 0));
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)^" + txt + ".*", 1));
                 }
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-               
+
             }
         });
-        
+
         // Khu lọc theo một số thuộc tính giới tính
         JLabel lb_gioitinh = new JLabel("Giới tính", JLabel.CENTER);
-        String[] gioitinh = {"", "Nam", "Nữ"};    
+        String[] gioitinh = { "", "Nam", "Nữ" };
         JComboBox cb_gioitinh = new JComboBox(gioitinh);
         cb_gioitinh.setPreferredSize(new Dimension(100, 30));
-        
+
         JLabel lb_quyen = new JLabel("Quyền", JLabel.CENTER);
         Vector<QuyenDTO> quyen = new Vector<>();
         quyen.add(new QuyenDTO("", "", true));
@@ -634,40 +668,41 @@ public class NhanVienGUI extends JPanel {
         }
         JComboBox cb_quyen = new JComboBox(quyen);
         cb_gioitinh.setPreferredSize(new Dimension(100, 30));
-        
+
         JButton btn_loc = new JButton("Lọc");
         btn_loc.setPreferredSize(new Dimension(100, 30));
-        
-        btn_loc.addMouseListener(new MouseAdapter() { 
+
+        btn_loc.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 String gioitinh_filter = (String) cb_gioitinh.getItemAt(cb_gioitinh.getSelectedIndex());
-//                String quyen_filter = (String) cb_quyen.getItemAt(cb_quyen.getSelectedIndex());
-                QuyenDTO quyenDTO = (QuyenDTO)cb_quyen.getSelectedItem();
+                // String quyen_filter = (String)
+                // cb_quyen.getItemAt(cb_quyen.getSelectedIndex());
+                QuyenDTO quyenDTO = (QuyenDTO) cb_quyen.getSelectedItem();
                 String quyen_filter = quyenDTO.getIdQuyen();
                 reloadUser(userBUS.filter(gioitinh_filter, quyen_filter));
             }
         });
-        
+
         //
         Font font_filter = new Font("Segoe UI", Font.BOLD, 13);
-        
+
         lb_tim_kiem.setFont(font_filter);
         tf_tim_kiem.setFont(font_filter);
         lb_gioitinh.setFont(font_filter);
         cb_gioitinh.setFont(font_filter);
         lb_quyen.setFont(font_filter);
-        
+
         lb_tim_kiem.setForeground(color1);
         tf_tim_kiem.setForeground(color1);
         lb_gioitinh.setForeground(color1);
         cb_gioitinh.setForeground(color1);
         lb_quyen.setForeground(color1);
-        
+
         btn_loc.setBackground(color2);
         btn_loc.setFont(font_filter);
         btn_loc.setForeground(this.colorBackground);
-        
+
         pn_filter.add(lb_tim_kiem);
         pn_filter.add(tf_tim_kiem);
         pn_filter.add(lb_gioitinh);
@@ -675,16 +710,16 @@ public class NhanVienGUI extends JPanel {
         pn_filter.add(lb_quyen);
         pn_filter.add(cb_quyen);
         pn_filter.add(btn_loc);
-        
+
         return pn_filter;
     }
-    
+
     public JPanel createPnTable() {
         JPanel pn_table = new JPanel(new FlowLayout(1, 0, 0));
         pn_table.setPreferredSize(new Dimension(this.width, 290));
-        
+
         String[] col = {
-            "Mã nhân viên", "Mật khẩu", "Tên nhân viên", "Giới tính", "SĐT", "Quyền", "IMG"
+                "Mã nhân viên", "Mật khẩu", "Tên nhân viên", "Giới tính", "SĐT", "Quyền", "IMG"
         };
         this.model = new DefaultTableModel(col, 0){
             @Override
@@ -698,7 +733,7 @@ public class NhanVienGUI extends JPanel {
         this.table.setRowSorter(rowSorter);
         JScrollPane scroll = new JScrollPane(table);
         scroll.setPreferredSize(new Dimension(900, 250));
-        
+
         table.getColumnModel().getColumn(0).setPreferredWidth(30);
         table.getColumnModel().getColumn(1).setPreferredWidth(40);
         table.getColumnModel().getColumn(2).setPreferredWidth(70);
@@ -706,61 +741,87 @@ public class NhanVienGUI extends JPanel {
         table.getColumnModel().getColumn(4).setPreferredWidth(80);
         table.getColumnModel().getColumn(5).setPreferredWidth(50);
         table.getColumnModel().getColumn(6).setPreferredWidth(50);
-        
+
         this.loadUser();
-        
+
         pn_table.add(scroll);
-        
+
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 int row = table.getSelectedRow();
                 if (table.getRowSorter() != null) {
                     row = table.getRowSorter().convertRowIndexToModel(row);
                 }
-                imgNhanVien = table.getModel().getValueAt(row, 6).toString();
-                IconModel icon_nv = new IconModel(175, 200, "NhanVien/" + imgNhanVien);
-                
+        
+                // Lấy thông tin hình ảnh từ cột IMG
+                Object imgObj = table.getModel().getValueAt(row, 6);
+                String imgNhanVien = (imgObj != null) ? imgObj.toString() : null; // Kiểm tra xem giá trị có khác null hay không
+        
+                // Khai báo biến icon_nv ở bên ngoài để sử dụng sau này
+                IconModel icon_nv;
+        
+                // Xử lý hiển thị hình ảnh
+                if (imgNhanVien == null || imgNhanVien.isEmpty()) {
+                    lbImgNhanVien.setIcon(null); // Không có hình ảnh, đặt icon thành null
+                    lbImgNhanVien.setText("Không có hình ảnh"); // Hiển thị văn bản cho ô trống
+                    
+                    // Đặt icon mặc định
+                    icon_nv = new IconModel(175, 200, "null"); // Đường dẫn hình ảnh mặc định
+                    lbImgNhanVien.setIcon(icon_nv.createIcon()); // Đặt icon mặc định
+                } else {
+                    // Tạo IconModel chỉ khi imgNhanVien không phải là null và không rỗng
+                    icon_nv = new IconModel(175, 200, "NhanVien/" + imgNhanVien);
+                    ImageIcon createdIcon = icon_nv.createIcon(); // Gọi createIcon để lấy hình ảnh
+                    
+                    // Kiểm tra nếu createdIcon là null trước khi thiết lập
+                    if (createdIcon != null) {
+                        lbImgNhanVien.setIcon(createdIcon); // Cập nhật biểu tượng nếu có hình ảnh
+                        lbImgNhanVien.setText(""); // Xóa bất kỳ văn bản nào trước đó
+                    } else {
+                        lbImgNhanVien.setIcon(null); // Nếu không có icon, đặt lại
+                        lbImgNhanVien.setText("Không tìm thấy hình ảnh: " + imgNhanVien);
+                    }
+                }
+        
                 arrTfInfor.get(1).setEditable(false);
                 cbGioiTinh.setEnabled(false);
-                
-                // set thông tin cho sản phẩm
+        
+                // Set thông tin cho sản phẩm
                 arrTfInfor.get(0).setText(table.getModel().getValueAt(row, 0).toString());
                 arrTfInfor.get(1).setText(table.getModel().getValueAt(row, 1).toString());
                 arrTfInfor.get(2).setText(table.getModel().getValueAt(row, 2).toString());
                 arrTfInfor.get(3).setText(table.getModel().getValueAt(row, 4).toString());
                 cbGioiTinh.setSelectedItem(table.getModel().getValueAt(row, 3).toString());
+        
+                // Xử lý quyền
                 for (QuyenDTO q : quyenBUS.getQuyenList()) {
                     if (q.isEnable() && q.getIdQuyen().equals(table.getModel().getValueAt(row, 5).toString())) {
                         cbQuyen.setSelectedItem(q);
                         break;
                     }
                 }
-                
-                lbImgNhanVien.setText("");
-                lbImgNhanVien.setIcon(icon_nv.createIcon());
-                
-//                if (isEditing) {
-//                    lockInfor(false);
-//                }
-//                else lockInfor(true);
             }
         });
         
+        
+        
+        
+
         // giao diện table
         Font font_table = new Font("Segoe UI", Font.BOLD, 13);
         table.getTableHeader().setBackground(color1);
         table.getTableHeader().setFont(font_table);
         table.getTableHeader().setForeground(this.colorBackground);
-        table.getTableHeader().setOpaque(false); 
+        table.getTableHeader().setOpaque(false);
         table.getTableHeader().setBorder(BorderFactory.createLineBorder(this.color1));
-        
+
         // căn giữa các chữ trong ô
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < col.length; i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
-        
+
         table.setFocusable(false);
         table.setShowVerticalLines(false);
         table.setIntercellSpacing(new Dimension(0, 0));
@@ -768,36 +829,37 @@ public class NhanVienGUI extends JPanel {
         table.setSelectionBackground(color3);
         table.setRowHeight(30);
         table.setBorder(BorderFactory.createLineBorder(this.color1));
-        
+
         return pn_table;
     }
-    
+
     public void loadUser() {
-        if (userBUS.getUserList()== null) {
+        if (userBUS.getUserList() == null) {
             userBUS.list();
         }
         ArrayList<UserDTO> userList = userBUS.getUserList();
         model.setRowCount(0);
         reloadUser(userList);
     }
-    
+
     public void reloadUser(ArrayList<UserDTO> userList) {
         model.setRowCount(0);
         for (UserDTO us : userList) {
             if (us.isEnable()) {
-                model.addRow(new Object[]{
-                    us.getIdUser(), us.getPassword(), us.getTenUser(), us.getGioiTinh(), us.getSdt(), us.getQuyen(), us.getImgUser()
+                model.addRow(new Object[] {
+                        us.getIdUser(), us.getPassword(), us.getTenUser(), us.getGioiTinh(), us.getSdt(), us.getQuyen(),
+                        us.getImgUser()
                 });
             }
         }
     }
-    
+
     public void loadQuyen() {
         if (quyenBUS.getQuyenList() == null) {
             quyenBUS.list();
         }
     }
-    
+
     public void saveImg() {
         try {
             if (bufferImg != null) {
@@ -808,35 +870,34 @@ public class NhanVienGUI extends JPanel {
         } catch (IOException ex) {
             Logger.getLogger(NhanVienGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
-    
+
     // khóa khả năng thao tác với thông tin
-//    public void lockInfor(boolean lock) {
-//        arrTfInfor.get(1).setEditable(!lock);
-//        cbQuyen.setEnabled(!lock);
-//    }
-    
-    public void lockInforAll(){
-        for(int i=0; i<= 3; i++){
+    // public void lockInfor(boolean lock) {
+    // arrTfInfor.get(1).setEditable(!lock);
+    // cbQuyen.setEnabled(!lock);
+    // }
+
+    public void lockInforAll() {
+        for (int i = 0; i <= 3; i++) {
             arrTfInfor.get(i).setEditable(false);
             cbQuyen.setEnabled(false);
             cbGioiTinh.setEnabled(false);
         }
     }
-    
-    public void lockInforAdd(){
-        for(int i=1; i<=3; i++){
+
+    public void lockInforAdd() {
+        for (int i = 1; i <= 3; i++) {
             arrTfInfor.get(i).setEditable(true);
             cbQuyen.setEnabled(true);
             cbGioiTinh.setEnabled(true);
         }
     }
-    
-    public void lockInforEdit(){
+
+    public void lockInforEdit() {
         arrTfInfor.get(1).setEditable(true);
     }
-    
+
     public void blankInfor() {
         arrTfInfor.get(0).setText("");
         arrTfInfor.get(1).setText("");
@@ -846,7 +907,7 @@ public class NhanVienGUI extends JPanel {
         lbImgNhanVien.setText("Image");
         imgNhanVien = "null";
     }
-    
+
     public void showCN() {
         this.btnThem.setVisible(quyenThem);
         this.btnSua.setVisible(quyenSua);
@@ -854,7 +915,7 @@ public class NhanVienGUI extends JPanel {
         this.btnNhapExcel.setVisible(quyenSua);
         this.btnXuatExcel.setVisible(quyenSua);
     }
-    
+
     public void openFile(String file) {
         try {
             File path = new File(file);
@@ -863,4 +924,56 @@ public class NhanVienGUI extends JPanel {
             System.out.println(e);
         }
     }
+
+    public boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("^0\\d{9}$");
+    }
+
+    public String validatePassword(String password) {
+        // check do dai mk
+        if (password.length() < 8) {
+            return "Mật khẩu phải có ít nhất 8 ký tự!";
+        }
+        boolean hasUpperCase = false;
+        boolean hasLowerCase = false;
+        boolean hasDigit = false;
+
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true; // co chu hoa
+            } else if (Character.isLowerCase(c)) {
+                hasLowerCase = true; // co chua thuong
+            } else if (Character.isDigit(c)) {
+                hasDigit = true; // co so
+            }
+        }
+
+        // check
+        if (!hasUpperCase) {
+            return "Mật khẩu phải có ít nhất 1 chữ cái in hoa!";
+        }
+        if (!hasLowerCase) {
+            return "Mật khẩu phải có ít nhất 1 chữ cái thường!";
+        }
+        if (!hasDigit) {
+            return "Mật khẩu phải có ít nhất 1 chữ số!";
+        }
+
+        return "done"; // done
+    }
+
+    public boolean isValidName(String name) {
+        // Kiểm tra nếu chuỗi rỗng hoặc chỉ chứa khoảng trắng
+        if (name.trim().isEmpty()) {
+            return false; // không hợp lệ
+        }
+    
+        // Biểu thức chính quy đơn giản hơn: phải có ít nhất 1 khoảng trắng giữa các từ
+        String regex = "^[\\p{L}]+(\\s[\\p{L}]+)+$";
+        return name.matches(regex); // Trả về true nếu tên hợp lệ, ngược lại là false
+    }
+    
+    
+    
+
 }
