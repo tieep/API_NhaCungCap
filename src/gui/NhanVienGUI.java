@@ -322,7 +322,7 @@ public class NhanVienGUI extends JPanel {
                 }
                 isEditing = true;
 
-                // arrTfInfor.get(1).setEditable(true);
+                 arrTfInfor.get(1).setEditable(true);
 
 //                lockInforEdit();
 
@@ -545,9 +545,26 @@ public class NhanVienGUI extends JPanel {
                             saveImg();
                             reloadUser(userBUS.getUserList());
                             blankInfor();
+                            
+                            lockInforAll();
+
+                            btnThem.setVisible(true);
+                            btnSua.setVisible(true);
+                            btnXoa.setVisible(true);
+                            btnNhapExcel.setVisible(true);
+                            btnXuatExcel.setVisible(true);
+
+                            showCN();
+
+                            btn_hoan_thanh.setVisible(false);
+                            btn_tro_ve.setVisible(false);
+                            btn_chon_anh.setVisible(false);
+
+                            table.setEnabled(true);
                         }
                     }
-
+                    
+                    
                 }
             }
         });

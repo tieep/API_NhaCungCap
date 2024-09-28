@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2024 at 10:19 AM
+-- Generation Time: Sep 28, 2024 at 03:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `quanlymaytinh`
+-- Database: `computerstore`
 --
 
 -- --------------------------------------------------------
@@ -36,16 +36,6 @@ CREATE TABLE `baohanh` (
   `ngay_tramay` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `baohanh`
---
-
-INSERT INTO `baohanh` (`id_bh`, `id_kh`, `ten_sp`, `Serial`, `ngay_baohanh`, `ngay_tramay`) VALUES
-('BH002', '', 'abc', 'SP001004', '2024-09-24', '2024-10-01'),
-('BH003', '', 'abc', 'SP001004', '2024-09-24', '2024-10-01'),
-('BH004', '', 'abc', 'SP001004', '2024-09-24', '2024-10-01'),
-('HD002', '', 'abc', 'SP001003', '2024-09-24', '2025-09-24');
-
 -- --------------------------------------------------------
 
 --
@@ -60,16 +50,6 @@ CREATE TABLE `cthoadon` (
   `don_gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `cthoadon`
---
-
-INSERT INTO `cthoadon` (`id_hd`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUES
-('HD001', 'SP001', 'abc', 2, 210000),
-('HD002', 'SP001', 'abc', 1, 210000),
-('HD003', 'SP001', 'abc', 2, 210000),
-('HD004', 'SP001', 'abc', 1, 210000);
-
 -- --------------------------------------------------------
 
 --
@@ -83,13 +63,6 @@ CREATE TABLE `ctphieunhap` (
   `so_luong` int(5) NOT NULL,
   `don_gia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ctphieunhap`
---
-
-INSERT INTO `ctphieunhap` (`id_pn`, `id_sp`, `ten_sp`, `so_luong`, `don_gia`) VALUES
-('PN001', 'SP001', 'abc', 6, 150000);
 
 -- --------------------------------------------------------
 
@@ -122,15 +95,11 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 ('QU001', '12'),
 ('QU001', '13'),
 ('QU001', '14'),
-('QU001', '15'),
-('QU001', '16'),
 ('QU001', '20'),
 ('QU001', '21'),
 ('QU001', '22'),
-('QU001', '23'),
 ('QU001', '24'),
 ('QU001', '30'),
-('QU001', '31'),
 ('QU001', '32'),
 ('QU001', '33'),
 ('QU001', '34'),
@@ -139,45 +108,17 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 ('QU002', '05'),
 ('QU002', '07'),
 ('QU002', '09'),
-('QU002', '11'),
-('QU002', '21'),
 ('QU002', '33'),
 ('QU003', '02'),
 ('QU003', '03'),
 ('QU003', '06'),
 ('QU003', '08'),
+('QU003', '09'),
 ('QU003', '12'),
 ('QU003', '13'),
-('QU003', '16'),
 ('QU003', '22'),
-('QU003', '23'),
 ('QU003', '32'),
-('QU003', '33'),
-('QU004', '00'),
-('QU004', '01'),
-('QU004', '02'),
-('QU004', '03'),
-('QU004', '04'),
-('QU004', '05'),
-('QU004', '06'),
-('QU004', '07'),
-('QU004', '08'),
-('QU004', '09'),
-('QU004', '10'),
-('QU004', '20'),
-('QU004', '30'),
-('QU005', '00'),
-('QU005', '04'),
-('QU005', '10'),
-('QU005', '14'),
-('QU005', '20'),
-('QU005', '24'),
-('QU005', '34'),
-('QU006', '00'),
-('QU006', '01'),
-('QU006', '02'),
-('QU006', '03'),
-('QU006', '13');
+('QU003', '33');
 
 -- --------------------------------------------------------
 
@@ -189,18 +130,6 @@ CREATE TABLE `ctsanpham` (
   `id_sp` varchar(6) NOT NULL,
   `serial` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ctsanpham`
---
-
-INSERT INTO `ctsanpham` (`id_sp`, `serial`) VALUES
-('SP001', 'SP001001'),
-('SP001', 'SP001002'),
-('SP001', 'SP001003'),
-('SP001', 'SP001004'),
-('SP001', 'SP001005'),
-('SP001', 'SP001006');
 
 -- --------------------------------------------------------
 
@@ -215,16 +144,6 @@ CREATE TABLE `hoadon` (
   `ngay_xuat` date NOT NULL,
   `tong_tien` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `hoadon`
---
-
-INSERT INTO `hoadon` (`id_hd`, `id_kh`, `id_user`, `ngay_xuat`, `tong_tien`) VALUES
-('HD001', '124', 'US001', '2024-09-24', 420000),
-('HD002', '', 'US001', '2024-09-24', 210000),
-('HD003', '', 'US001', '2024-09-24', 420000),
-('HD004', 'KH001', 'US001', '2024-09-25', 210000);
 
 -- --------------------------------------------------------
 
@@ -245,9 +164,8 @@ CREATE TABLE `khachhang` (
 --
 
 INSERT INTO `khachhang` (`id`, `ten`, `dia_chi`, `sdt`, `enable`) VALUES
-('KH001', 'ad', 'asd', '124', 1),
-('KH002', 'b2m', '159 aer', '033', 1),
-('KH003', 'Dell-P56-HD002342', '159 aer', '025555', 1);
+('KH001', 'khach hang fff', 'hcm hanoi', '0555555555', 1),
+('KH002', 'khach hang vippro', 'an do', '0123456789', 1);
 
 -- --------------------------------------------------------
 
@@ -268,7 +186,8 @@ CREATE TABLE `nhacungcap` (
 --
 
 INSERT INTO `nhacungcap` (`id`, `ten`, `dia_chi`, `sdt`, `enable`) VALUES
-('CC001', 'a', 'a', '234', 1);
+('CC001', 'Nha cung cap abc', '123 hcm', '0666666666', 1),
+('CC002', 'Nha cung cap xyz', '666 hanoi', '0777777777', 1);
 
 -- --------------------------------------------------------
 
@@ -285,16 +204,6 @@ CREATE TABLE `phieubaohanh` (
   `id_hd` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `phieubaohanh`
---
-
-INSERT INTO `phieubaohanh` (`id_kh`, `ten_sp`, `serial`, `ngay_mua`, `ngay_het_han`, `id_hd`) VALUES
-('KH001', 'ABC 111', 'SP001002', '2024-09-03', '2024-09-10', 'HD001'),
-('', 'abc', 'SP001004', '2024-09-24', '2025-09-24', 'HD003'),
-('', 'abc', 'SP001005', '2024-09-24', '2025-09-24', 'HD003'),
-('KH001', 'abc', 'SP001006', '2024-09-25', '2025-09-25', 'HD004');
-
 -- --------------------------------------------------------
 
 --
@@ -308,13 +217,6 @@ CREATE TABLE `phieunhap` (
   `ngay_nhap` date NOT NULL,
   `tong_tien` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `phieunhap`
---
-
-INSERT INTO `phieunhap` (`id_pn`, `id_ncc`, `id_user`, `ngay_nhap`, `tong_tien`) VALUES
-('PN001', '', 'US001', '2024-09-24', 900000);
 
 -- --------------------------------------------------------
 
@@ -333,7 +235,9 @@ CREATE TABLE `quyen` (
 --
 
 INSERT INTO `quyen` (`id`, `ten`, `enable`) VALUES
-('QU001', 'Admin', 1);
+('QU001', 'Admin', 1),
+('QU002', 'Nhân viên bán hàng', 1),
+('QU003', 'Nhân viên nhập hàng', 1);
 
 -- --------------------------------------------------------
 
@@ -357,7 +261,9 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `ten`, `so_luong`, `gia_nhap`, `gia_ban`, `hang`, `img`, `enable`) VALUES
-('SP001', 'abc', 0, 150000, 210000, 'Acer', 'SP001.png', 1);
+('SP001', 'Acer 123', 0, 0, 0, 'Acer', 'SP001.png', 1),
+('SP002', 'MSI 111', 0, 0, 0, 'MSI', 'SP002.png', 1),
+('SP003', 'Dell 666', 0, 0, 0, 'Dell', 'SP003.png', 1);
 
 -- --------------------------------------------------------
 
@@ -382,7 +288,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`, `enable`) VALUES
 ('US001', 'admin', 'admin', 'Nam', '123', 'QU001', 'US001.png', 1),
-('US002', '159', 'abbb', 'Nam', '021', 'QU001', 'null', 1);
+('US002', 'Passdaiqua123', 'abbb', 'Nam', '021', 'QU001', 'null', 1),
+('US003', 'Khongcopass123', 'abc hehe', 'Nam', '0333333333', 'QU002', 'null', 1);
 
 --
 -- Indexes for dumped tables
