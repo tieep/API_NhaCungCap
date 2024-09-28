@@ -435,6 +435,10 @@ public class NhapHangGUI extends JPanel implements ActionListener {
             arrTfInfor.get(1).setText(result.getIdNCC());
         }
         else if (e.getSource().equals(this.btnTaoPhieuNhap)) {
+            if (arrTfInfor.get(1).getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn nhà cung cấp!");
+                return;
+            }
             int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận tạo phiếu nhập", "", JOptionPane.YES_NO_OPTION);
             if (confirmed == 0) {
                 try {
