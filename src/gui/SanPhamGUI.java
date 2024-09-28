@@ -264,6 +264,7 @@ public class SanPhamGUI extends JPanel {
                 arrTfInfor.get(3).setText("0");
                 arrTfInfor.get(4).setText("0");
                 
+                
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
                 btnXoa.setVisible(false);
@@ -425,6 +426,23 @@ public class SanPhamGUI extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int confirmed;
+                
+                //lấy tên hãng
+                String brand = cbBrand.getSelectedItem().toString();
+        
+                // Lấy tên
+                String tenSanPham = arrTfInfor.get(1).getText();
+
+                // kiểm tra chứa tên hãng
+                if (!brand.isEmpty()) {
+                    String validationMessage = SanPhamBUS.validateProductName(tenSanPham, brand);
+                    //kiểm tra tên hợp lý chưa
+                    if (validationMessage != null) {
+                        JOptionPane.showMessageDialog(null, validationMessage);
+                        return;
+                    }
+                }
+
                 if (isEditing) { // đang trong chế độ sửa
                     confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận sửa sản phẩm", "", JOptionPane.YES_NO_OPTION);
                     if (confirmed == 0) { // xác nhận sửa

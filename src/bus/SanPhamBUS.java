@@ -38,6 +38,13 @@ public class SanPhamBUS {
     }
     
     public void addSanPham(SanPhamDTO sp) {
+        
+        if(!isCorrectProductName(sp.getTenSanPham())){
+            
+            return ;
+        }
+        
+        
         spList.add(sp);
         SanPhamDAO sanPhamDAO = new SanPhamDAO();
         sanPhamDAO.addDB(sp);
@@ -61,6 +68,38 @@ public class SanPhamBUS {
             }
         }
         return false;
+    }
+    
+    
+    public static boolean isCorrectProductName(String productname){
+        if(productname == null || productname.trim().isEmpty()){
+            return false;
+        }
+        if(productname.length() < 3 || productname.length() > 50){
+            return false;
+        }
+        String regex = "^[a-zA-Z0-9\\s-_]+$";
+        if(!productname.matches(regex)){
+            return false;
+        }
+        return true;
+    }
+    public static String validateProductName(String productname, String hang){
+        if(productname == null || productname.trim().isEmpty()){
+            return "Tên sản phẩm không được để trống.";
+        }
+        if(productname.length() < 3 || productname.length() > 50){
+            return "Tên sản phẩm phải từ 3 đến 50 ký tự.";
+        }
+        String regex = "^[a-zA-Z0-9\\s-_]+$";
+        if(!productname.matches(regex)){
+            return "Tên sản phẩm chỉ được chứa chữ cái, số, khoảng trắng, dấu gạch ngang và dấu gạch dưới.";
+        }
+        if (!productname.contains(hang)) {
+            return "Tên sản phẩm phải chứa tên hãng: " + hang;
+        }
+        
+        return null;
     }
     
     public String createNewId() {
