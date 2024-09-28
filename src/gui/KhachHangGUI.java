@@ -206,28 +206,28 @@ public class KhachHangGUI extends JPanel {
         pn_btn.add(btn_tro_ve);
         
         // khi ấn nút thêm
-//       btnThem.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                blankInfor();
-//                isEditing = false;
-//                lockInforAdd();
-//                
-//                arrTfInfor.get(0).setText(khachHangBUS.createNewId());
-//                
-//                btnThem.setVisible(false);
-//                btnSua.setVisible(false);
-//                btnXoa.setVisible(false);
-//                btnNhapExcel.setVisible(false);
-//                btnXuatExcel.setVisible(false);
-//                
-//                btn_hoan_thanh.setVisible(true);
-//                btn_tro_ve.setVisible(true);
-//                
-//                table.clearSelection();
-//                table.setEnabled(false);
-//            }
-//        });
+       btnThem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                blankInfor();
+                isEditing = false;
+                lockInforAdd();
+                
+                arrTfInfor.get(0).setText(khachHangBUS.createNewId());
+                
+                btnThem.setVisible(false);
+                btnSua.setVisible(false);
+                btnXoa.setVisible(false);
+                btnNhapExcel.setVisible(false);
+                btnXuatExcel.setVisible(false);
+                
+                btn_hoan_thanh.setVisible(true);
+                btn_tro_ve.setVisible(true);
+                
+                table.clearSelection();
+                table.setEnabled(false);
+            }
+        });
         
         // khi ấn nút sửa
         btnSua.addMouseListener(new MouseAdapter() {

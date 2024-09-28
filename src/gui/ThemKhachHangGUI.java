@@ -121,6 +121,20 @@ public class ThemKhachHangGUI extends JDialog implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Các thông tin không được để trống!"); 
                     return;
                 }
+                else if (!isValidName(tenKH)) { // kiem tra hop le ten
+                    JOptionPane.showMessageDialog(null, "Tên không hợp lệ! Phải có ít nhất 1 khoảng trắng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } 
+                else if (!isValidName(diachi)) { 
+                    JOptionPane.showMessageDialog(null, "Địa chỉ không hợp lệ! Phải có ít nhất 1 khoảng trắng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } 
+                else if (!isValidPhoneNumber(sdt)) { // kiem tra hop le so dien thoai
+                    JOptionPane.showMessageDialog(null,
+                            "Số điện thoại không hợp lệ!",
+                            "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 KhachHangDTO kh = new KhachHangDTO(idKH, tenKH, diachi, sdt, true);
                 khachHangBUS.addKhachHang(kh);
@@ -132,5 +146,20 @@ public class ThemKhachHangGUI extends JDialog implements ActionListener {
         else if (e.getSource().equals(this.btnQuayVe)) {
             dispose();
         }
-    }    
+    }
+    
+    public boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("^0\\d{9}$");
+    }
+    
+    public boolean isValidName(String name) {
+        // Kiểm tra nếu chuỗi rỗng hoặc chỉ chứa khoảng trắng
+        if (name.trim().isEmpty()) {
+            return false; // không hợp lệ
+        }
+    
+        // Biểu thức chính quy đơn giản hơn: phải có ít nhất 1 khoảng trắng giữa các từ
+        String regex = "^[\\p{L}]+(\\s[\\p{L}]+)+$";
+        return name.matches(regex); // Trả về true nếu tên hợp lệ, ngược lại là false
+    }
 }

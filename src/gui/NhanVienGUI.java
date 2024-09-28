@@ -316,15 +316,15 @@ public class NhanVienGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn nhân viên cần sửa!");
                     return;
                 }
-                // else if (arrTfInfor.get(0).getText().equals("US001")) {
-                // JOptionPane.showMessageDialog(null, "Không được phép sửa tài khoản admin!");
-                // return;
-                // }
+                else if (arrTfInfor.get(0).getText().equals("US001")) {
+                JOptionPane.showMessageDialog(null, "Không được phép sửa tài khoản admin!");
+                return;
+                }
                 isEditing = true;
 
                 // arrTfInfor.get(1).setEditable(true);
 
-                lockInforEdit();
+//                lockInforEdit();
 
                 btnThem.setVisible(false);
                 btnSua.setVisible(false);
@@ -355,7 +355,6 @@ public class NhanVienGUI extends JPanel {
                         cnt++;
                     }
                 }
-                System.out.println(cnt);
 
                 if (cnt < 2) {
                     JOptionPane.showMessageDialog(null, "Không thể xóa admin duy nhất!");
@@ -804,9 +803,6 @@ public class NhanVienGUI extends JPanel {
         });
         
         
-        
-        
-
         // giao diện table
         Font font_table = new Font("Segoe UI", Font.BOLD, 13);
         table.getTableHeader().setBackground(color1);
@@ -894,9 +890,9 @@ public class NhanVienGUI extends JPanel {
         }
     }
 
-    public void lockInforEdit() {
-        arrTfInfor.get(1).setEditable(true);
-    }
+//    public void lockInforEdit() {
+//        arrTfInfor.get(1).setEditable(true);
+//    }
 
     public void blankInfor() {
         arrTfInfor.get(0).setText("");
@@ -973,7 +969,4 @@ public class NhanVienGUI extends JPanel {
         return name.matches(regex); // Trả về true nếu tên hợp lệ, ngược lại là false
     }
     
-    
-    
-
 }
