@@ -40,7 +40,16 @@ public class BaoHanhBUS {
         return res;
     }
     
-    
+    public boolean checkTime(String serial, LocalDate date) {
+        for (BaoHanhDTO bh : bhList) {
+            if (bh.getSerial().equals(serial)) {
+                if(bh.getNgayTraMay().isAfter(date)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
     public String createNewId() {
         String id = "BH";

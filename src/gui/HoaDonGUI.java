@@ -258,8 +258,13 @@ public class HoaDonGUI extends JPanel {
         String[] col = {
             "Mã hóa đơn", "Mã khách hàng", "Mã nhân viên", "Ngày xuất", "Tổng tiền"
         };
-        this.model = new DefaultTableModel(col, 0);
-        this.table = new JTable();
+        this.model = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.table = new JTable(model);
         rowSorter = new TableRowSorter<TableModel>(model);
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);

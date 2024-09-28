@@ -514,8 +514,13 @@ public class KhachHangGUI extends JPanel {
         
         String[] col = {"Mã khách hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại"};
 
-        this.model = new DefaultTableModel(col, 0);
-        this.table = new JTable();
+        this.model = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.table = new JTable(model);
         rowSorter = new TableRowSorter<TableModel>(model);
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);
