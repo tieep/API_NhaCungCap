@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2024 at 03:13 PM
+-- Generation Time: Sep 28, 2024 at 04:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -95,6 +95,8 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 ('QU001', '12'),
 ('QU001', '13'),
 ('QU001', '14'),
+('QU001', '15'),
+('QU001', '16'),
 ('QU001', '20'),
 ('QU001', '21'),
 ('QU001', '22'),
@@ -102,23 +104,7 @@ INSERT INTO `ctquyenchucnang` (`id_quyen`, `id_chuc_nang`) VALUES
 ('QU001', '30'),
 ('QU001', '32'),
 ('QU001', '33'),
-('QU001', '34'),
-('QU002', '01'),
-('QU002', '03'),
-('QU002', '05'),
-('QU002', '07'),
-('QU002', '09'),
-('QU002', '33'),
-('QU003', '02'),
-('QU003', '03'),
-('QU003', '06'),
-('QU003', '08'),
-('QU003', '09'),
-('QU003', '12'),
-('QU003', '13'),
-('QU003', '22'),
-('QU003', '32'),
-('QU003', '33');
+('QU001', '34');
 
 -- --------------------------------------------------------
 
@@ -235,9 +221,7 @@ CREATE TABLE `quyen` (
 --
 
 INSERT INTO `quyen` (`id`, `ten`, `enable`) VALUES
-('QU001', 'Admin', 1),
-('QU002', 'Nhân viên bán hàng', 1),
-('QU003', 'Nhân viên nhập hàng', 1);
+('QU001', 'Admin', 1);
 
 -- --------------------------------------------------------
 
@@ -289,7 +273,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `password`, `ten`, `gioi_tinh`, `sdt`, `quyen`, `img`, `enable`) VALUES
 ('US001', 'admin', 'admin', 'Nam', '123', 'QU001', 'US001.png', 1),
 ('US002', 'Passdaiqua123', 'abbb', 'Nam', '021', 'QU001', 'null', 1),
-('US003', 'Khongcopass123', 'abc hehe', 'Nam', '0333333333', 'QU002', 'null', 1);
+('US003', 'Khongcopass123', 'abc hehe', 'Nam', '0333333333', 'QU001', 'null', 1);
 
 --
 -- Indexes for dumped tables

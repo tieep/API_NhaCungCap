@@ -432,6 +432,10 @@ public class BanHangGUI extends JPanel implements ActionListener {
             arrTfInfor.get(1).setText(result.getIdKhach());
         }
         else if (e.getSource().equals(this.btnTaoHoaDon)) {
+            if (arrTfInfor.get(1).getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng!");
+                return;
+            }
             int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận tạo hóa đơn", "", JOptionPane.YES_NO_OPTION);
             if (confirmed == 0) {
                 try {
