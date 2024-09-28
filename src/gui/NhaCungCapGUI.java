@@ -418,7 +418,7 @@ public class NhaCungCapGUI extends JPanel {
                             return;
                         }
                         if (!tenNCC.matches("^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)*$")) {
-                            JOptionPane.showMessageDialog(null, "Tên không được có kí tự đặc biệt!");
+                            JOptionPane.showMessageDialog(null, "Tên không được có kí tự đặc biệt hoặc chữ số!");
                             return;
                         }
                         
