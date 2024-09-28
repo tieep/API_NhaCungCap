@@ -259,8 +259,13 @@ public class PhieuNhapGUI extends JPanel {
         String[] col = {
             "Mã phiếu nhập", "Mã nhà cung cấp", "Mã nhân viên", "Ngày nhập", "Tổng tiền"
         };
-        this.model = new DefaultTableModel(col, 0);
-        this.table = new JTable();
+        this.model = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.table = new JTable(model);
         rowSorter = new TableRowSorter<TableModel>(model);
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);

@@ -172,12 +172,12 @@ public class BaoHanhGUI  extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (arrTfInfor.get(0).getText().equals("")) {
-                    JOptionPane.showMessageDialog(null, "Bảo hanh trống!");
+                    JOptionPane.showMessageDialog(null, "Bảo hành trống!");
                     return;
                 }
                 
                 int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận bảo hành", "Alert", JOptionPane.YES_NO_OPTION);
-                if (confirmed == 0) { // xác nhận xóa
+                if (confirmed == 0) {
                     
                 String id_bh = arrTfInfor.get(0).getText();
                 String id_kh = arrTfInfor.get(5).getText();
@@ -209,8 +209,13 @@ public class BaoHanhGUI  extends JPanel {
 //                    }
 //                }
 //                String text = phieuBaoHanhBUS.check(ngay_baohanh);
-                if(!(phieuBaoHanhBUS.check(serial, ngay_baohanh))){
+                if(!(phieuBaoHanhBUS.checkTime(serial, ngay_baohanh))){
                     JOptionPane.showMessageDialog(null,"Phiếu bảo hành hết hạn !");
+                    return;
+                }
+                
+                if(!(baoHanhBUS.checkTime(serial, ngay_baohanh))){
+                    JOptionPane.showMessageDialog(null,"Sản phẩm đang bảo hành !");
                     return;
                 }
 //
@@ -336,8 +341,13 @@ public class BaoHanhGUI  extends JPanel {
             "Serial", "Hóa đơn", "Khách hàng", "Sản phẩm", "Ngày mua", "Ngày hết hạn"
         };
         
-        model = new DefaultTableModel(col, 0);
-        tableCT = new JTable();
+        model = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tableCT = new JTable(model);
         rowSorter = new TableRowSorter<TableModel>(model);
         tableCT.setModel(model);
         tableCT.setRowSorter(rowSorter);
@@ -572,8 +582,13 @@ public class BaoHanhGUI  extends JPanel {
         
         String[] col = {
             "Mã bảo hành", "Khách hàng", "Tên sản phẩm", "Serial", "Ngày bảo hành", "Ngày trả máy"};
-        this.model = new DefaultTableModel(col, 0);
-        this.table = new JTable();
+        this.model = new DefaultTableModel(col, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        this.table = new JTable(model);
         rowSorter1 = new TableRowSorter<TableModel>(model);
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter1);

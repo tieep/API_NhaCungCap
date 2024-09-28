@@ -220,12 +220,32 @@ public class LoginGUI extends JFrame implements MouseListener {
                 }
                 String userid = tf_user.getText();
                 char[] password = tf_password.getPassword();
-                UserDTO user = userBUS.checkUser(userid, password);
-                if (user == null) {
-                    lb_error_noti.setText("Tên đăng nhập hoặc mật khẩu không đúng!");
+                UserDTO userId = userBUS.checkId(userid);
+                UserDTO user = userBUS.checkUser(userid,password);
+                
+                if(userid.equals("") && password.length == 0){
+                    lb_error_noti.setText("Tên đăng nhập và mật khẩu trống!");
                     return;
                 }
-                mainGUI = new MainGUI(user);
+                else{
+                    if(userid.equals("")){
+                        lb_error_noti.setText("Tên đăng nhập trống!");
+                        return;
+                    }
+                    if(password.length == 0){
+                        lb_error_noti.setText("Mật khẩu đăng nhập trống!");
+                        return;
+                    }
+                }
+                if (userId == null) {
+                    lb_error_noti.setText("Tên đăng nhập không tồn tại!");
+                    return;
+                }
+                else if (user == null) {
+                    lb_error_noti.setText("Sai mật khẩu!");
+                    return;
+                }
+                mainGUI = new MainGUI(userId);
                 dispose();
             }
         

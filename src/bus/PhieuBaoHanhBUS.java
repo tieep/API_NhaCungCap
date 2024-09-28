@@ -40,7 +40,7 @@ public class PhieuBaoHanhBUS {
         return res;
     }
     
-    public boolean check(String serial, LocalDate date) {
+    public boolean checkTime(String serial, LocalDate date) {
         for (PhieuBaoHanhDTO bh : bhList) {
             if (bh.getSerial().equals(serial)) {
                 if(bh.getNgayHetHan().isAfter(date)){
