@@ -36,6 +36,15 @@ public class UserBUS {
         return null;
     }
     
+    public UserDTO checkId(String userId) {
+        for (UserDTO user : userList) {
+            if (user.getIdUser().equals(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+    
     public void updateUser(UserDTO user) {
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getIdUser().equals(user.getIdUser())) {

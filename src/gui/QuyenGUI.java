@@ -501,13 +501,15 @@ public class QuyenGUI extends JPanel {
             "Mã quyền", "Tên quyền"
         };
         this.model = new DefaultTableModel(col, 0) {
+
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        this.table = new JTable();
-        
+
+        this.table = new JTable(model);
+
         rowSorter = new TableRowSorter<TableModel>(model);
         this.table.setModel(model);
         this.table.setRowSorter(rowSorter);
