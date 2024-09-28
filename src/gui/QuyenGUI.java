@@ -712,16 +712,8 @@ public class QuyenGUI extends JPanel {
             this.arrCbSua.get(i).setEnabled(!lock);
             this.arrCbXoa.get(i).setEnabled(!lock);
              
-//            if(i >= 5){
-//                this.arrCbXoa.get(i).setEnabled(false);
-//                this.arrCbSua.get(i).setEnabled(false);
-//                if (i >= 7) {
-//                    this.arrCbThem.get(i).setEnabled(false);
-//                }
-//            }
         }
-        this.arrCbThem.get(1).setEnabled(false);
-        this.arrCbThem.get(2).setEnabled(false);
+        
         this.arrCbThem.get(5).setEnabled(false);
         this.arrCbThem.get(6).setEnabled(false);
         this.arrCbThem.get(7).setEnabled(false);
@@ -735,7 +727,6 @@ public class QuyenGUI extends JPanel {
         this.arrCbSua.get(9).setEnabled(false);
 
         this.arrCbXoa.get(1).setEnabled(false);
-        this.arrCbXoa.get(2).setEnabled(false);
         this.arrCbXoa.get(5).setEnabled(false);
         this.arrCbXoa.get(6).setEnabled(false);
         this.arrCbXoa.get(7).setEnabled(false);
