@@ -125,7 +125,12 @@ public class ChonKhachHangGUI extends JDialog implements ActionListener {
         String[] col = {
             "Mã khách hàng", "Tên khách hàng", "SĐT"
         };
-        modelKH = new DefaultTableModel(col, 0);
+        modelKH = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tableKH = new JTable();
         rowSorter = new TableRowSorter<TableModel>(modelKH);
         tableKH.setModel(modelKH);

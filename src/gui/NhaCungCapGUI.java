@@ -455,6 +455,21 @@ public class NhaCungCapGUI extends JPanel {
                         
                         reloadNCC(nhaCungCapBUS.getNccList());
                         blankInfor();
+                        
+                        lockInforAll();
+
+                        btnThem.setVisible(true);
+                        btnSua.setVisible(true);
+                        btnXoa.setVisible(true);
+                        btnNhapExcel.setVisible(true);
+                        btnXuatExcel.setVisible(true);
+
+                        showCN();
+
+                        btn_hoan_thanh.setVisible(false);
+                        btn_tro_ve.setVisible(false);
+
+                        table.setEnabled(true);
                     }
                 }
             }

@@ -206,13 +206,6 @@ public class QuyenGUI extends JPanel {
             this.arrCbXoa.add(new JCheckBox());
             this.arrCbXoa.get(i).setPreferredSize(d_tf);
             
-//            if(i >= 5){
-//                this.arrCbXoa.get(i).setEnabled(false);
-//                this.arrCbSua.get(i).setEnabled(false);
-//                if (i >= 7) {
-//                    this.arrCbThem.get(i).setEnabled(false);
-//                }
-//            }
             this.arrCbXem.get(i).setEnabled(false);
             this.arrCbThem.get(i).setEnabled(false);
             this.arrCbSua.get(i).setEnabled(false);
@@ -381,6 +374,11 @@ public class QuyenGUI extends JPanel {
                     if (confirmed == 0) { // xác nhận thêm
                         String id = arrTfInfor.get(0).getText();
                         String ten = arrTfInfor.get(1).getText();
+                        
+                        if (ten.trim().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Tên không được để trống!");
+                            return;
+                        }
                        
                         QuyenDTO quyen = new QuyenDTO(id, ten, true);
                         quyenBUS.addQuyen(quyen);
@@ -720,6 +718,7 @@ public class QuyenGUI extends JPanel {
         this.arrCbThem.get(8).setEnabled(false);
         this.arrCbThem.get(9).setEnabled(false);
         
+        this.arrCbSua.get(3).setEnabled(false);
         this.arrCbSua.get(5).setEnabled(false);
         this.arrCbSua.get(6).setEnabled(false);
         this.arrCbSua.get(7).setEnabled(false);

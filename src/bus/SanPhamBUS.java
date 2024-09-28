@@ -44,7 +44,6 @@ public class SanPhamBUS {
             return ;
         }
         
-        
         spList.add(sp);
         SanPhamDAO sanPhamDAO = new SanPhamDAO();
         sanPhamDAO.addDB(sp);
@@ -84,7 +83,7 @@ public class SanPhamBUS {
         }
         return true;
     }
-    public static String validateProductName(String productname, String hang){
+    public String validateProductName(String productname, String hang){
         if(productname == null || productname.trim().isEmpty()){
             return "Tên sản phẩm không được để trống.";
         }

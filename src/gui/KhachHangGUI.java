@@ -197,7 +197,7 @@ public class KhachHangGUI extends JPanel {
         btn_tro_ve.setFont(font_btn);
         
         // thêm các nút
-//        pn_btn.add(btnThem);
+        pn_btn.add(btnThem);
         pn_btn.add(btnSua);
 //        pn_btn.add(btnXoa);
         pn_btn.add(btnNhapExcel);

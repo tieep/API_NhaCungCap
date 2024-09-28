@@ -314,6 +314,10 @@ public class SanPhamGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa!");
                     return;
                 }
+                if (arrTfInfor.get(2).getText().equals("0")) {
+                    JOptionPane.showMessageDialog(null, "Không thể xóa sản còn số lượng!");
+                    return;
+                }
                 
                 int confirmed = JOptionPane.showConfirmDialog(null, "Xác nhận xóa", "Alert", JOptionPane.YES_NO_OPTION);
                 if (confirmed == 0) { // xác nhận xóa
@@ -435,7 +439,7 @@ public class SanPhamGUI extends JPanel {
 
                 // kiểm tra chứa tên hãng
                 if (!brand.isEmpty()) {
-                    String validationMessage = SanPhamBUS.validateProductName(tenSanPham, brand);
+                    String validationMessage = sanPhamBUS.validateProductName(tenSanPham, brand);
                     //kiểm tra tên hợp lý chưa
                     if (validationMessage != null) {
                         JOptionPane.showMessageDialog(null, validationMessage);
@@ -486,7 +490,24 @@ public class SanPhamGUI extends JPanel {
                         saveImg();
                         
                         reloadSP(sanPhamBUS.getSpList());
+                        
                         blankInfor();
+                
+                        lockInforAll();
+
+                        btnThem.setVisible(true);
+                        btnSua.setVisible(true);
+                        btnXoa.setVisible(true);
+                        btnNhapExcel.setVisible(true);
+                        btnXuatExcel.setVisible(true);
+
+                        showCN();
+
+                        btn_hoan_thanh.setVisible(false);
+                        btn_tro_ve.setVisible(false);
+                        btn_chon_anh.setVisible(false);
+
+                        table.setEnabled(true);
                     }
                 }
             }

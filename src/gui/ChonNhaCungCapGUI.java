@@ -109,7 +109,12 @@ public class ChonNhaCungCapGUI extends JDialog implements ActionListener {
         String[] col = {
             "Mã nhà cung cấp", "Tên nhà cung cấp", "SĐT"
         };
-        modelNCC = new DefaultTableModel(col, 0);
+        modelNCC = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tableNCC = new JTable();
         rowSorter = new TableRowSorter<TableModel>(modelNCC);
         tableNCC.setModel(modelNCC);
