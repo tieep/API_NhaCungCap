@@ -379,6 +379,18 @@ public class NhaCungCapGUI extends JPanel {
                         String tenNCC = arrTfInfor.get(1).getText();
                         String diachi = arrTfInfor.get(2).getText();
                         String sdt = arrTfInfor.get(3).getText();
+
+                        //Kiểm tra địa chỉ
+                        if (diachi == null || diachi.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Địa chỉ không được để trống!");
+                            return;
+                        }
+                        if (!diachi.matches("^[A-Za-z0-9À-ÿ,.\\\\s-]+$")) {
+                            if (diachi.startsWith(" ") || diachi.endsWith(" ")) {
+                                JOptionPane.showMessageDialog(null, "Địa chỉ không được bắt đầu và kết thúc bằng khoảng trắng!");
+                                return;
+                            }
+                        }
                         
                         NhaCungCapDTO ncc = new NhaCungCapDTO(idNCC, tenNCC, diachi, sdt, true);
                         nhaCungCapBUS.updateNhaCungCap(ncc);
@@ -395,6 +407,43 @@ public class NhaCungCapGUI extends JPanel {
                         String tenNCC = arrTfInfor.get(1).getText();
                         String diachi = arrTfInfor.get(2).getText();
                         String sdt = arrTfInfor.get(3).getText();
+
+                        //Kiểm tra tên
+                        if (tenNCC == null || tenNCC.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Tên không được để trống!");
+                            return;
+                        }
+                        if (tenNCC.startsWith(" ") || tenNCC.endsWith(" ")) {
+                            JOptionPane.showMessageDialog(null, "Tên không được bắt đầu và kết thúc bằng khoảng trắng!");
+                            return;
+                        }
+                        if (!tenNCC.matches("^[A-Za-zÀ-ÿ]+( [A-Za-zÀ-ÿ]+)*$")) {
+                            JOptionPane.showMessageDialog(null, "Tên không được có kí tự đặc biệt hoặc chữ số!");
+                            return;
+                        }
+                        
+                        //Kiểm tra địa chỉ
+                        if (diachi == null || diachi.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Địa chỉ không được để trống!");
+                            return;
+                        }
+                        if (!diachi.matches("^[A-Za-z0-9À-ÿ,.\\\\s-]+$")) {
+                            if (diachi.startsWith(" ") || diachi.endsWith(" ")) {
+                                JOptionPane.showMessageDialog(null, "Địa chỉ không được bắt đầu và kết thúc bằng khoảng trắng!");
+                                return;
+                            }
+                        }
+                        
+                        //Kiểm tra số điện thoại
+                        if (sdt == null || sdt.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Số điện thoại không được để trống!");
+                            return;
+                        }
+                        if (!sdt.matches("^0\\d{9}$")) {
+                            JOptionPane.showMessageDialog(null, "Số điện thoại phải bắt đầu bằng số 0 và theo sau là 9 chữ số!");
+                            return;
+                        }
+
                         
                         if (nhaCungCapBUS.isExisted(idNCC)) {
                             JOptionPane.showMessageDialog(null, "Mã nhà cung cấp đă tồn tại!");
