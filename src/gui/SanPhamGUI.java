@@ -314,7 +314,7 @@ public class SanPhamGUI extends JPanel {
                     JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xóa!");
                     return;
                 }
-                if (arrTfInfor.get(2).getText().equals("0")) {
+                if (!arrTfInfor.get(2).getText().equals("0")) {
                     JOptionPane.showMessageDialog(null, "Không thể xóa sản còn số lượng!");
                     return;
                 }

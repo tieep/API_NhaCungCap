@@ -150,6 +150,12 @@ public class TaoGiaNhapGUI extends JDialog implements ActionListener {
                 return;
             }
             
+            if (this.giaNhap < 100) {
+                JOptionPane.showMessageDialog(null, "Giá nhập tối thiểu là 100");
+                this.giaNhap = 0;
+                return;
+            }
+            
             if (this.slider.getValue() == 0) {
                 JOptionPane.showMessageDialog(null, "Lợi nhuận tối thiểu là 1%");
                 this.giaNhap = 0;
@@ -158,7 +164,11 @@ public class TaoGiaNhapGUI extends JDialog implements ActionListener {
             
             this.giaBan = this.giaNhap + (this.giaNhap * this.slider.getValue()/100);
             int confirmed = JOptionPane.showConfirmDialog(null, "Sản phẩm sẽ có giá bán " + this.giaBan, "", JOptionPane.YES_NO_OPTION);
-            if (confirmed == 0) {
+            if (confirmed == JOptionPane.YES_OPTION) {
+                dispose();
+            }
+            else if (confirmed == JOptionPane.NO_OPTION) {
+                this.giaNhap = 0;
                 dispose();
             }
         }
