@@ -16,6 +16,8 @@ import dao.PhieuNhapDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.ServerSocket;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import dao.CTPhieuNhapDAO;
+import dto.CTPhieuNhapDTO;
 public class API_Server extends NanoHTTPD {
 
    public API_Server(int port) throws IOException {
@@ -61,6 +63,21 @@ public class API_Server extends NanoHTTPD {
                 }
                 return newFixedLengthResponse(Response.Status.OK, "application/json", jsonResponse);
             }
+        } else if("/api/list-ctphieu-nhap".equals(uri)){
+            if ("GET".equals(method)){
+                CTPhieuNhapDAO ctpnDAO = new CTPhieuNhapDAO();
+                ArrayList<CTPhieuNhapDTO> ctpnList = ctpnDAO.list();
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonResponse = "";
+                try {
+                    jsonResponse = objectMapper.writeValueAsString(ctpnList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/plain", "500 Internal Server Error");
+                }
+                return newFixedLengthResponse(Response.Status.OK, "application/json", jsonResponse);
+            }
+            
         } else if ("/api/list-bao-hanh".equals(uri)) {
             if ("GET".equals(method)) {
                 String jsonResponse = "{\"info\": \"This is some information from the API.\"}";
