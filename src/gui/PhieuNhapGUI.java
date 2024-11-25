@@ -327,10 +327,10 @@ public class PhieuNhapGUI extends JPanel {
     }
     
     public void loadPN() {
-//        if (phieuNhapBUS.getPnList() == null) {
-//            phieuNhapBUS.list();
-//        }
-//        ArrayList<PhieuNhapDTO> pnList = phieuNhapBUS.getPnList();
+        if (phieuNhapBUS.getPnList() == null) {
+            phieuNhapBUS.list();
+        }
+        ArrayList<PhieuNhapDTO> pnList = phieuNhapBUS.getPnList();
         model.setRowCount(0);
         reloadPN(pnList);
     }
