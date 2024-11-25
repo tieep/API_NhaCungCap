@@ -49,7 +49,8 @@ public class HoaDonGUI extends JPanel {
     private JTable table, tableCT;
     private TableRowSorter<TableModel> rowSorter;
     private DefaultTableModel model, modelCT;
-    
+    private JComboBox cb_tim_kiem;
+    private JTextField tf_tim_kiem;
     public HoaDonGUI(int width, int height) {
         this.width = width;
         this.height = height;
@@ -154,7 +155,7 @@ public class HoaDonGUI extends JPanel {
         
         JPanel pn_tim_kiem = new JPanel(new FlowLayout(1, 0, 0));
         pn_tim_kiem.setPreferredSize(new Dimension(250, 30));
-        JComboBox cb_tim_kiem = new JComboBox();
+        cb_tim_kiem = new JComboBox();
         cb_tim_kiem.setPreferredSize(new Dimension(140, 30));
         cb_tim_kiem.addItem("Mã hóa đơn");
         cb_tim_kiem.addItem("Mã khách");
@@ -163,7 +164,7 @@ public class HoaDonGUI extends JPanel {
         cb_tim_kiem.setBackground(colorBackground);
         cb_tim_kiem.setFont(font_filter);
         
-        JTextField tf_tim_kiem = new JTextField();
+        tf_tim_kiem = new JTextField();
         tf_tim_kiem.setPreferredSize(new Dimension(100, 30));
         tf_tim_kiem.setFont(font_filter);
         tf_tim_kiem.setForeground(color1);
@@ -171,26 +172,12 @@ public class HoaDonGUI extends JPanel {
         tf_tim_kiem.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                String text = tf_tim_kiem.getText();
-                int choice = cb_tim_kiem.getSelectedIndex();
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                }
-                else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice)); 
-                }
+                handleSearch();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                String text = tf_tim_kiem.getText();
-                int choice = cb_tim_kiem.getSelectedIndex();
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                }
-                else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice)); 
-                }
+                handleSearch();
             }
 
             @Override
@@ -249,6 +236,15 @@ public class HoaDonGUI extends JPanel {
         pn_filter.add(btn_loc);
         
         return pn_filter;
+    }
+    private void handleSearch() {
+        String text = tf_tim_kiem.getText();
+        int choice = cb_tim_kiem.getSelectedIndex();
+        if (text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text + "", choice));
+        }
     }
     
     public JPanel createPnTable() {
