@@ -1,7 +1,6 @@
 package test;
 
 import gui.LoginGUI;
-import gui.MainGUI;
 import API.API_Server;
 import java.io.IOException;
 public class Test {
@@ -14,5 +13,6 @@ public class Test {
             }
         }).start();
         new LoginGUI();
+
     }
 }
