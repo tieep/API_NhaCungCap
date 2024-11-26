@@ -2,7 +2,10 @@ package test;
 
 import gui.LoginGUI;
 import API.API_Server;
+import controllers.CTPhieuNhapController;
+import dto.CTPhieuNhapDTO;
 import java.io.IOException;
+import java.util.List;
 public class Test {
     public static void main(String[] args) {
         new Thread(() -> {
@@ -14,5 +17,13 @@ public class Test {
         }).start();
         new LoginGUI();
         
+        CTPhieuNhapController controller = new CTPhieuNhapController();
+        List<CTPhieuNhapDTO> ctpnList = controller.getCTPhieuNhapList();
+        if(ctpnList != null) {
+            for(CTPhieuNhapDTO ct : ctpnList) {
+                System.out.println(ct.getIdPhieuNhap());
+            }
+        }
+
     }
 }
