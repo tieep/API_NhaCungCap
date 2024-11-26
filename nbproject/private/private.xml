@@ -13,12 +13,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/API/API_Server.java</file>
-            <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/bus/HoaDonBUS.java</file>
             <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/dao/MySQLConnect.java</file>
             <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/dto/PhieuNhapDTO.java</file>
-            <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/bus/PhieuNhapBUS.java</file>
             <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/test/Test.java</file>
-            <file>file:/C:/Study/KTPM/TESTING/java-computer-store/src/gui/PhieuNhapGUI.java</file>
         </group>
     </open-files>
 </project-private>

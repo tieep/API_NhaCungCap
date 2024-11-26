@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class MySQLConnect {
     private String user = "root";
-    private String password = "";
+    private String password = "Oanh2004!";
     private String url = "jdbc:mysql://localhost:3306/computerstore";
     private Connection conn = null;
     private Statement st = null;
@@ -21,6 +21,7 @@ public class MySQLConnect {
     
     public void connect() {
         try {
+            System.out.println("tai sáooasoaosaosdfs");
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException ex) {
