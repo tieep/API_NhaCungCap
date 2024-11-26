@@ -3,6 +3,7 @@ package gui;
 import bus.CTPhieuNhapBUS;
 import bus.PhieuNhapBUS;
 import com.toedter.calendar.JDateChooser;
+import controllers.CTPhieuNhapController;
 import controllers.PhieuNhapController;
 import dto.CTPhieuNhapDTO;
 import dto.PhieuNhapDTO;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -352,12 +354,28 @@ public class PhieuNhapGUI extends JPanel {
     }
 
     public void loadCTPN(String id) {
-        if (ctPhieuNhapBUS.getCtpnList() == null) {
-            ctPhieuNhapBUS.list();
+//        if (ctPhieuNhapBUS.getCtpnList() == null) {
+//            ctPhieuNhapBUS.list();
+//        }
+//        ArrayList<CTPhieuNhapDTO> ctpnList = ctPhieuNhapBUS.listId(id);
+//        modelCT.setRowCount(0);
+//        reloadCTPN(ctpnList);
+
+        CTPhieuNhapController ctPhieuNhapController = new CTPhieuNhapController();
+
+        ArrayList<CTPhieuNhapDTO> ctpnList =(ArrayList<CTPhieuNhapDTO>) ctPhieuNhapController.getCTPhieuNhapList();
+
+        ArrayList<CTPhieuNhapDTO> filteredList = new ArrayList<>();
+        if (ctpnList != null) {
+            for (CTPhieuNhapDTO ctpn : ctpnList) {
+                if (ctpn.getIdPhieuNhap().equals(id)) {
+                    filteredList.add(ctpn);
+                }
+            }
         }
-        ArrayList<CTPhieuNhapDTO> ctpnList = ctPhieuNhapBUS.listId(id);
+
         modelCT.setRowCount(0);
-        reloadCTPN(ctpnList);
+        reloadCTPN(filteredList);
     }
 
     public void reloadCTPN(ArrayList<CTPhieuNhapDTO> ctpnList) {
