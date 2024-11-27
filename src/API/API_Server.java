@@ -134,12 +134,12 @@ public class API_Server extends NanoHTTPD {
             // Lấy tham số từ query
             LocalDate ngayBaoHanh = parseDateParam(session.getParms().get("ngayBaoHanh"));
             LocalDate ngayTraMay = parseDateParam(session.getParms().get("ngayTraMay"));
-            String idHoaDon = session.getParms().get("idHoaDon");
+            String idBaoHanh = session.getParms().get("idBaoHanh");
             String idKhachHang = session.getParms().get("idKhachHang");
 
             // Lọc danh sách theo điều kiện
             pbhList.removeIf(pbh
-                    -> (idHoaDon != null && !idHoaDon.isEmpty() && !pbh.getIdBaoHanh().equals(idHoaDon))
+                    -> (idBaoHanh != null && !idBaoHanh.isEmpty() && !pbh.getIdBaoHanh().equals(idBaoHanh))
                     || (idKhachHang != null && !idKhachHang.isEmpty() && !pbh.getIdKhachHang().equals(idKhachHang))
                     || (ngayBaoHanh != null && !pbh.getNgayBaoHanh().equals(ngayBaoHanh))
                     || (ngayTraMay != null && !pbh.getNgayTraMay().equals(ngayTraMay))
