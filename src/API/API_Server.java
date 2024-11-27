@@ -128,38 +128,48 @@ public class API_Server extends NanoHTTPD {
     }
 
     private Response handleGetBaoHanh(IHTTPSession session, ObjectMapper objectMapper) {
-        try {
-            BaoHanhDAO pbhDAO = new BaoHanhDAO();
-            ArrayList<BaoHanhDTO> pbhList = pbhDAO.list();
-            // Lấy tham số từ query
-            LocalDate ngayBaoHanh = parseDateParam(session.getParms().get("ngayBaoHanh"));
-            LocalDate ngayTraMay = parseDateParam(session.getParms().get("ngayTraMay"));
-            String idBaoHanh = session.getParms().get("idBaoHanh");
-            String idKhachHang = session.getParms().get("idKhachHang");
+    try {
+        BaoHanhDAO pbhDAO = new BaoHanhDAO();
+        ArrayList<BaoHanhDTO> pbhList = pbhDAO.list();
+        // Lấy tham số từ query
+        LocalDate ngayBaoHanh = parseDateParam(session.getParms().get("ngayBaoHanh"));
+        LocalDate ngayTraMay = parseDateParam(session.getParms().get("ngayTraMay"));
+        String idBaoHanh = session.getParms().get("idBaoHanh");
+        String idKhachHang = session.getParms().get("idKhachHang");
 
-            // Lọc danh sách theo điều kiện
-            pbhList.removeIf(pbh
-                    -> (idBaoHanh != null && !idBaoHanh.isEmpty() && !pbh.getIdBaoHanh().equals(idBaoHanh))
-                    || (idKhachHang != null && !idKhachHang.isEmpty() && !pbh.getIdKhachHang().equals(idKhachHang))
-                    || (ngayBaoHanh != null && !pbh.getNgayBaoHanh().equals(ngayBaoHanh))
-                    || (ngayTraMay != null && !pbh.getNgayTraMay().equals(ngayTraMay))
-            );
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("data", pbhList);
-            response.put("status", 200);
-            if (pbhList.isEmpty()) {
-                response.put("message", "Không có dữ liệu phù hợp");
-            } else {
-                response.put("message", "Lấy danh sách bảo hành thành công");
-            }
-            // Chuyển danh sách thành JSON
-            String jsonResponse = objectMapper.writeValueAsString(response);
-            return newFixedLengthResponse(Response.Status.OK, "application/json", jsonResponse);
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Lọc danh sách theo điều kiện
+        pbhList.removeIf(pbh
+                -> (idBaoHanh != null && !idBaoHanh.isEmpty() && !pbh.getIdBaoHanh().equals(idBaoHanh))
+                || (idKhachHang != null && !idKhachHang.isEmpty() && !pbh.getIdKhachHang().equals(idKhachHang))
+                || (ngayBaoHanh != null && !pbh.getNgayBaoHanh().equals(ngayBaoHanh))
+                || (ngayTraMay != null && !pbh.getNgayTraMay().equals(ngayTraMay))
+        );
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("data", pbhList);
+        response.put("status", 200);
+        if (pbhList.isEmpty()) {
+            response.put("message", "Không có dữ liệu phù hợp");
+        } else {
+            response.put("message", "Lấy danh sách bảo hành thành công");
+        }
+        // Chuyển danh sách thành JSON
+        String jsonResponse = objectMapper.writeValueAsString(response);
+        return newFixedLengthResponse(Response.Status.OK, "application/json", jsonResponse);
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.err.println("aaaaaaaa");
+        // Trả về lỗi 500 và thông tin chi tiết về lỗi trong response
+        HashMap<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("status", 500);
+        errorResponse.put("message", e.getMessage()); // Xuất thông tin lỗi chi tiết
+        try {
+            String errorJson = objectMapper.writeValueAsString(errorResponse);
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "application/json", errorJson);
+        } catch (IOException ioException) {
             return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/plain", "500 Internal Server Error");
         }
     }
+}
 
     private LocalDate parseDateParam(String dateStr) {
         if (dateStr == null || dateStr.isEmpty()) {
